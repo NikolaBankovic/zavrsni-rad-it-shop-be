@@ -18,9 +18,5 @@ public class Product {
 
     private Float price;
 
-    private String manufacturerName;
-
-    private String manufacturerCatalogueNumber;
-
-    private String linkToPartOnManufacturerWebsite;
+    private String description;
 }
