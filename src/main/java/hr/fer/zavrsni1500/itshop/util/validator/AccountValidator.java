@@ -1,0 +1,70 @@
+package hr.fer.zavrsni1500.itshop.util.validator;
+
+
+import hr.fer.zavrsni1500.itshop.exception.SamePasswordException;
+import hr.fer.zavrsni1500.itshop.model.User;
+import hr.fer.zavrsni1500.itshop.repository.UserRepository;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
+
+@Component
+@RequiredArgsConstructor
+public class AccountValidator {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public void usernameTaken(String username) {
+        if(userRepository.existsByUsername(username)) {
+            throw new EntityExistsException("This username is already taken!");
+        }
+    }
+
+    public void usernameChangeValid(final User user, final String username) {
+        if(userRepository.existsByUsername(username)) {
+            throw new EntityExistsException("This username is already taken!");
+        }
+        else {
+            if(user.getUsername().equals(username)) {
+                throw new EntityExistsException("New username cannot be the same as old username!");
+            }
+        }
+
+    }
+
+    public void emailExists(String email) {
+        if(userRepository.existsByEmail(email)) {
+            throw new EntityExistsException("This email adress is already in use!");
+        }
+    }
+
+    public void passwordChangeValid(final Long id, final String newPassword) throws SamePasswordException {
+        final User user = userRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("User with ID(%d) doesn't exist!", id)));
+        if(passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new SamePasswordException("New password cannot be the same as old password!");
+        }
+
+    }
+
+    public void passwordChangeValid(final String username, final String newPassword) throws SamePasswordException {
+        final User user = userRepository.findByUsername(username);
+        if(user != null && passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new SamePasswordException("New password cannot be the same as old password!");
+        }
+
+    }
+
+    public void passwordChangeValid(final User user, final String newPassword) throws SamePasswordException {
+        if(passwordEncoder.matches(newPassword, user.getPassword())) {
+            throw new SamePasswordException("New password cannot be the same as old password!");
+        }
+    }
+
+
+}
