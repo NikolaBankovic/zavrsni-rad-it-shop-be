@@ -1,6 +1,7 @@
 package hr.fer.zavrsni1500.itshop.util.validator;
 
 
+import hr.fer.zavrsni1500.itshop.exception.PasswordComplexityException;
 import hr.fer.zavrsni1500.itshop.exception.SamePasswordException;
 import hr.fer.zavrsni1500.itshop.model.User;
 import hr.fer.zavrsni1500.itshop.repository.UserRepository;
@@ -19,8 +20,14 @@ public class AccountValidator {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void usernameTaken(String username) {
+    public void usernameTaken(final String username) {
         if(userRepository.existsByUsername(username)) {
+            throw new EntityExistsException("This username is already taken!");
+        }
+    }
+
+    public void usernameTaken(final User user, final String username) {
+        if(!user.getUsername().equals(username) && userRepository.existsByUsername(username)) {
             throw new EntityExistsException("This username is already taken!");
         }
     }
@@ -39,13 +46,22 @@ public class AccountValidator {
 
     public void emailExists(String email) {
         if(userRepository.existsByEmail(email)) {
-            throw new EntityExistsException("This email adress is already in use!");
+            throw new EntityExistsException("This email address is already in use!");
         }
     }
 
-    public void passwordChangeValid(final Long id, final String newPassword) throws SamePasswordException {
+    public void emailExists(final User user, final String email) {
+        if(!user.getEmail().equals(email) && userRepository.existsByEmail(email)) {
+            throw new EntityExistsException("This email address is already in use!");
+        }
+    }
+
+    public void passwordChangeValid(final Long id, final String newPassword) throws SamePasswordException, PasswordComplexityException {
         final User user = userRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException(String.format("User with ID(%d) doesn't exist!", id)));
+        if(newPassword.length() < 8) {
+            throw new PasswordComplexityException("Password must be at least 8 characters");
+        }
         if(passwordEncoder.matches(newPassword, user.getPassword())) {
             throw new SamePasswordException("New password cannot be the same as old password!");
         }
