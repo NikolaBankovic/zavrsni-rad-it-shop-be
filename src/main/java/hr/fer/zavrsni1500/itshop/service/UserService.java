@@ -19,7 +19,7 @@ public interface UserService {
 
     void updateUser(Long id, UpdateUserDto userDto);
 
-    void changeUserPassword(Long userId, PasswordChangeDto passwordChangeDto) throws WrongPasswordException, WrongPasswordException, PasswordComplexityException, SamePasswordException;
+    void changeUserPassword(Long userId, PasswordChangeDto passwordChangeDto) throws WrongPasswordException, PasswordComplexityException, SamePasswordException;
 
     void deleteUser(Long userId);
 }
