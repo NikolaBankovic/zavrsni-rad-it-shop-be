@@ -48,7 +48,10 @@ public class AccountController {
     @PatchMapping("/{userId}")
     @PreAuthorize("hasRole('ROLE_ADMIN') || @currentUserService.isCurrentUserMakingRequest(#userId)")
     public void changeUserPassword(@PathVariable final Long userId,
-                                   @RequestBody final PasswordChangeDto changePasswordDto) throws PasswordComplexityException, SamePasswordException, WrongPasswordException {
+                                   @RequestBody final PasswordChangeDto changePasswordDto) throws
+            PasswordComplexityException,
+            SamePasswordException,
+            WrongPasswordException {
         userService.changeUserPassword(userId, changePasswordDto);
     }
 
