@@ -28,5 +28,4 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RuntimeException(String.format("Product with ID(%d) not found!", id)));
         productRepository.delete(product);
     }
-
 }
