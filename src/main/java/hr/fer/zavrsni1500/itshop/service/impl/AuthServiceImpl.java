@@ -9,8 +9,7 @@ import hr.fer.zavrsni1500.itshop.model.User;
 import hr.fer.zavrsni1500.itshop.repository.UserRepository;
 import hr.fer.zavrsni1500.itshop.security.TokenProvider;
 import hr.fer.zavrsni1500.itshop.service.AuthService;
-import hr.fer.zavrsni1500.itshop.util.mapper.UserRegisterDtoMapper;
-import hr.fer.zavrsni1500.itshop.util.mapper.UserUserDtoMapper;
+import hr.fer.zavrsni1500.itshop.util.mapper.UserMapper;
 import hr.fer.zavrsni1500.itshop.util.validator.AccountValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,13 +28,12 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final UserUserDtoMapper userUserDtoMapper;
-    private final UserRegisterDtoMapper userRegisterDtoMapper;
+    private final UserMapper userMapper;
 
     public UserDto getCurrentUser() {
         final User user = getUserFromToken();
 
-        return userUserDtoMapper.userToUserDto(user);
+        return userMapper.userToUserDto(user);
     }
 
     public LoginResponse login(final LoginDto loginDto) {
@@ -44,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
 
         final User user = userRepository.findByUsername(loginDto.username());
         final String token = tokenProvider.generateToken(user.getUsername(), user.getRole());
-        final UserDto userDto = userUserDtoMapper.userToUserDto(user);
+        final UserDto userDto = userMapper.userToUserDto(user);
         return new LoginResponse(userDto, token);
     }
 
@@ -52,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
         accountValidator.usernameTaken(registerDto.username());
         accountValidator.emailExists(registerDto.email());
 
-        final User user = userRegisterDtoMapper.registerDtoToUser(registerDto);
+        final User user = userMapper.registerDtoToUser(registerDto);
         user.setRole(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(registerDto.password()));
 

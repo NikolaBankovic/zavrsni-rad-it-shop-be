@@ -10,8 +10,7 @@ import hr.fer.zavrsni1500.itshop.exception.WrongPasswordException;
 import hr.fer.zavrsni1500.itshop.model.User;
 import hr.fer.zavrsni1500.itshop.repository.UserRepository;
 import hr.fer.zavrsni1500.itshop.service.UserService;
-import hr.fer.zavrsni1500.itshop.util.mapper.UserRegisterDtoMapper;
-import hr.fer.zavrsni1500.itshop.util.mapper.UserUserDtoMapper;
+import hr.fer.zavrsni1500.itshop.util.mapper.UserMapper;
 import hr.fer.zavrsni1500.itshop.util.validator.AccountValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,23 +24,20 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserUserDtoMapper userUserDtoMapper;
-    private final UserRegisterDtoMapper userRegisterDtoMapper;
+    private final UserMapper userMapper;
     private final AccountValidator accountValidator;
     private final PasswordEncoder passwordEncoder;
 
-    //Returns list of all users in database
     public List<UserDto> getAllUsers() {
         final List<User> userList = userRepository.findAll();
 
-        return userUserDtoMapper.userListToUserDtoList(userList);
+        return userMapper.userListToUserDtoList(userList);
     }
 
-    //Returns user from database by id
     public UserDto getUserById(final Long id) {
         final User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with ID(%d) doesn't exist!", id)));
-        return userUserDtoMapper.userToUserDto(user);
+        return userMapper.userToUserDto(user);
     }
 
 
@@ -49,7 +45,7 @@ public class UserServiceImpl implements UserService {
         accountValidator.usernameTaken(registerDto.username());
         accountValidator.emailExists(registerDto.email());
 
-        final User user = userRegisterDtoMapper.registerDtoToUser(registerDto);
+        final User user = userMapper.registerDtoToUser(registerDto);
         user.setPassword(passwordEncoder.encode(registerDto.password()));
 
         userRepository.save(user);
