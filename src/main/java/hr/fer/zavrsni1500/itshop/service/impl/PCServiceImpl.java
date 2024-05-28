@@ -20,7 +20,7 @@ public class PCServiceImpl implements PCService {
 
     public PCDto getPCById(Long id) {
         return pcMapper.pcToPcDto(pcRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Product with ID(%d) not found!", id))));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id))));
     }
 
     public List<PCDto> getAllPCs() {
@@ -44,7 +44,7 @@ public class PCServiceImpl implements PCService {
 
     public void deletePC(Long id) {
         PC pc = pcRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("PC with ID(%d) not found!", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("PC with ID(%d) not found!", id)));
         pcRepository.delete(pc);
     }
 }

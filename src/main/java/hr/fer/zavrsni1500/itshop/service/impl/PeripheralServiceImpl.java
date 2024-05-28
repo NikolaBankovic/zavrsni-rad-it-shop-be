@@ -20,7 +20,7 @@ public class PeripheralServiceImpl implements PeripheralService {
 
     public PeripheralDto getPeripheralById(Long id) {
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Peripheral with ID(%d) not found!", id))));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id))));
     }
 
     public List<PeripheralDto> getAllPeripherals() {
@@ -44,7 +44,7 @@ public class PeripheralServiceImpl implements PeripheralService {
 
     public void deletePeripheral(Long id) {
         Peripheral peripheral = peripheralRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Peripheral with ID(%d) not found!", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
         peripheralRepository.delete(peripheral);
     }
 }
