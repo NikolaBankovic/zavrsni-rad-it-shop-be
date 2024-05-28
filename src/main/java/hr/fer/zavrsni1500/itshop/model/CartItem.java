@@ -2,11 +2,13 @@ package hr.fer.zavrsni1500.itshop.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor()
 @Table(name = "`cart_item`")
 public class CartItem {
 
@@ -23,5 +25,11 @@ public class CartItem {
     private Product product;
 
     private int quantity;
+
+    public CartItem(Cart cart, Product product, int quantity) {
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+    }
 
 }

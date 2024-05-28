@@ -25,7 +25,7 @@ public class CartServiceImpl implements CartService {
     private final ProductRepository productRepository;
     private final CartMapper cartMapper;
 
-    public CartDto getCart(User user) {
+    public CartDto viewCart(User user) {
         Cart cart = cartRepository.findByUserId(user.getId());
         if (cart == null) {
             cart = createNewCart(user);
@@ -37,23 +37,16 @@ public class CartServiceImpl implements CartService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found", productId)));
 
-        Cart cart = cartMapper.cartDtoToCart(getCart(user));
+        Cart cart  = getCart(user);
 
-        Optional<CartItem> existingCartItem = cart.getCartItemList().stream()
-                .filter(cartItem -> cartItem.getProduct().getId().equals(productId))
-                .findFirst();
+        Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndProductId(cart.getId(), productId);
 
-        if (existingCartItem.isPresent()) {
-            CartItem cartItem = existingCartItem.get();
-            cartItem.setQuantity(cartItem.getQuantity() + quantity);
-            cartItemRepository.save(cartItem);
+        if (cartItem.isPresent()) {
+            cartItem.get().setQuantity(cartItem.get().getQuantity() + quantity);
+            cartItemRepository.save(cartItem.get());
         } else {
-            CartItem cartItem = new CartItem();
-            cartItem.setCart(cart);
-            cartItem.setProduct(product);
-            cartItem.setQuantity(quantity);
-            cartItemRepository.save(cartItem);
-            cart.getCartItemList().add(cartItem);
+            CartItem newCartItem = new CartItem(cart, product, quantity);
+            cart.getCartItemList().add(newCartItem);
             cartRepository.save(cart);
         }
 
@@ -64,16 +57,12 @@ public class CartServiceImpl implements CartService {
         productRepository.findById(productId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found", productId)));
 
-        Cart cart = cartMapper.cartDtoToCart(getCart(user));
+        Cart cart = getCart(user);
 
-        Optional<CartItem> cartItemOptional = cart.getCartItemList().stream()
-                .filter(cartItem -> cartItem.getProduct().getId().equals(productId))
-                .findFirst();
+        Optional<CartItem> cartItem = cartItemRepository.findByCartIdAndProductId(cart.getId(), productId);
 
-        if (cartItemOptional.isPresent()) {
-            CartItem cartItem = cartItemOptional.get();
-            cart.getCartItemList().remove(cartItem);
-            cartItemRepository.delete(cartItem);
+        if (cartItem.isPresent()) {
+            cart.getCartItemList().remove(cartItem.get());
             cartRepository.save(cart);
         }
 
@@ -81,7 +70,17 @@ public class CartServiceImpl implements CartService {
     }
 
     public CartDto clearCart(User user) {
-        return cartMapper.cartToCartDto(createNewCart(user));
+        Cart cart = getCart(user);
+        cart.getCartItemList().clear();
+        return cartMapper.cartToCartDto(cartRepository.save(cart));
+    }
+
+    private Cart getCart(User user) {
+        Cart cart = cartRepository.findByUserId(user.getId());
+        if (cart == null) {
+            cart = createNewCart(user);
+        }
+        return cart;
     }
 
     private Cart createNewCart(User user) {
