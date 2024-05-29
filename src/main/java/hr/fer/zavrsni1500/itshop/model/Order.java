@@ -23,13 +23,15 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItemsList;
 
-    public double getTotalAmount() {
+    private double totalPrice;
+
+    public void setTotalAmount() {
         if (orderItemsList != null) {
-            return orderItemsList.stream().mapToDouble(OrderItem::getTotalPrice).sum();
-        }
-        else {
-            return 0;
+            this.totalPrice = orderItemsList.stream()
+                    .mapToDouble(orderItem -> orderItem.getPrice()* orderItem.getQuantity())
+                    .sum();
+        } else {
+            this.totalPrice =  0;
         }
     }
-
 }

@@ -1,6 +1,7 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.OrderDto;
+import hr.fer.zavrsni1500.itshop.exception.EmptyCartException;
 import hr.fer.zavrsni1500.itshop.model.User;
 import hr.fer.zavrsni1500.itshop.service.CurrentUserService;
 import hr.fer.zavrsni1500.itshop.service.OrderService;
@@ -38,9 +39,9 @@ public class OrderController {
     }
 
     @PostMapping()
-    public OrderDto createOrder(@RequestBody OrderDto orderDto) {
+    public OrderDto createOrder() throws EmptyCartException {
         User user = currentUserService.getCurrentUser();
-        return orderService.createOrder(user, orderDto);
+        return orderService.createOrder(user);
     }
 
     @PutMapping()

@@ -40,4 +40,10 @@ public class ExceptionResponseHandler {
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler({EmptyCartException.class})
+    public ResponseEntity<ErrorResponse> handleEmptyCartException(final EmptyCartException e) {
+        final ErrorResponse body = new ErrorResponse(e.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
 }

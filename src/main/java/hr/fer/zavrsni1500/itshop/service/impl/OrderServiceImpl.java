@@ -1,8 +1,12 @@
 package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.OrderDto;
+import hr.fer.zavrsni1500.itshop.exception.EmptyCartException;
+import hr.fer.zavrsni1500.itshop.model.Cart;
 import hr.fer.zavrsni1500.itshop.model.Order;
+import hr.fer.zavrsni1500.itshop.model.OrderItem;
 import hr.fer.zavrsni1500.itshop.model.User;
+import hr.fer.zavrsni1500.itshop.repository.CartRepository;
 import hr.fer.zavrsni1500.itshop.repository.OrderRepository;
 import hr.fer.zavrsni1500.itshop.service.OrderService;
 import hr.fer.zavrsni1500.itshop.util.mapper.OrderItemMapper;
@@ -20,6 +24,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
     private final OrderMapper orderMapper;
     private final OrderItemMapper orderItemMapper;
     private final UserMapper userMapper;
@@ -52,10 +57,21 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.orderToOrderDto(order);
     }
 
-    public OrderDto createOrder(User user, OrderDto orderDto){
-        Order order = orderMapper.orderDtoToOrder(orderDto);
-        order.setUser(user);
-        return orderMapper.orderToOrderDto(orderRepository.save(order));
+    public OrderDto createOrder(User user) throws EmptyCartException {
+        Optional<Cart> cart = cartRepository.findByUserId(user.getId());
+        if(cart.isPresent()) {
+            List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.get().getCartItemList());
+            orderItems.forEach(orderItem -> orderItem.setPrice(orderItem.getProduct().getPrice()));
+
+            Order order = new Order();
+            order.setUser(user);
+            order.setOrderItemsList(orderItems);
+            order.setTotalAmount();
+            return orderMapper.orderToOrderDto(orderRepository.save(order));
+        }
+        else {
+            throw new EmptyCartException("Cart is empty");
+        }
     }
 
     public OrderDto updateOrder(OrderDto orderDto){
