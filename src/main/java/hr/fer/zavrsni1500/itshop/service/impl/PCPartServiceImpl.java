@@ -19,7 +19,7 @@ public class PCPartServiceImpl implements PCPartService {
 
     public PCPartDto getPCPartById(Long id) {
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("PC part with ID(%d) not found!", id))));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id))));
     }
 
     public List<PCPartDto> getAllPCParts() {
@@ -43,7 +43,7 @@ public class PCPartServiceImpl implements PCPartService {
 
     public void deletePCPart(Long id) {
         PCPart pcPart = pcPartRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("PC part with ID(%d) not found!", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id)));
         pcPartRepository.delete(pcPart);
     }
 }

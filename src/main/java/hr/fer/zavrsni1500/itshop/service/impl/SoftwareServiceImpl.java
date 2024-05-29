@@ -20,7 +20,7 @@ public class SoftwareServiceImpl implements SoftwareService {
 
     public SoftwareDto getSoftwareById(Long id) {
         return softwareMapper.softwareToSoftwareDto(softwareRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Software with ID(%d) not found!", id))));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id))));
     }
 
     public List<SoftwareDto> getAllSoftwares() {
@@ -44,7 +44,7 @@ public class SoftwareServiceImpl implements SoftwareService {
 
     public void deleteSoftware(Long id) {
         Software software = softwareRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Software with ID(%d) not found!", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
         softwareRepository.delete(software);
     }
 }

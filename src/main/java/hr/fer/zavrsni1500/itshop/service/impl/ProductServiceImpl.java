@@ -3,6 +3,7 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 import hr.fer.zavrsni1500.itshop.model.Product;
 import hr.fer.zavrsni1500.itshop.repository.ProductRepository;
 import hr.fer.zavrsni1500.itshop.service.ProductService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class ProductServiceImpl implements ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Product with ID(%d) not found!", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id)));
     }
 
     public List<Product> getAllProducts() {
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("Product with ID(%d) not found!", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id)));
         productRepository.delete(product);
     }
 }
