@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,20 +46,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public OrderDto createOrder(User user) throws EmptyCartException {
-        Optional<Cart> cart = cartRepository.findByUserId(user.getId());
-        if(cart.isPresent()) {
-            List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.get().getCartItemList());
-            orderItems.forEach(orderItem -> orderItem.setPrice(orderItem.getProduct().getPrice()));
+        Cart cart = cartRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new EmptyCartException("Cart is empty"));
 
-            Order order = new Order();
-            order.setUser(user);
-            order.setOrderItemsList(orderItems);
-            order.setTotalAmount();
-            return orderMapper.orderToOrderDto(orderRepository.save(order));
-        }
-        else {
-            throw new EmptyCartException("Cart is empty");
-        }
+        List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.getCartItemList());
+        orderItems.forEach(orderItem -> orderItem.setPrice(orderItem.getProduct().getPrice()));
+
+        Order order = new Order();
+        order.setUser(user);
+        order.setOrderItemsList(orderItems);
+        order.setTotalAmount();
+        cartRepository.delete(cart);
+
+        return orderMapper.orderToOrderDto(orderRepository.save(order));
+
     }
 
     public OrderDto updateOrder(OrderDto orderDto){
