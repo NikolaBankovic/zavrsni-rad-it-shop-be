@@ -10,7 +10,6 @@ public interface OrderService {
 
     List<OrderDto> getAllOrders();
     List<OrderDto> getOrdersByUserId(Long userId);
-    OrderDto getOrderByUserIdAndOrderId(Long userId, Long orderId);
     OrderDto getOrderById(Long orderId);
     OrderDto createOrder(User user) throws EmptyCartException;
     OrderDto updateOrder(OrderDto orderDto);

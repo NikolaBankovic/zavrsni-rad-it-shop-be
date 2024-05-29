@@ -39,17 +39,6 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.ordersToOrderDtos(orders);
     }
 
-    public OrderDto getOrderByUserIdAndOrderId(Long userId, Long orderId){
-        Optional<Order> order = orderRepository.findByUserIdAndOrderId(userId, orderId);
-        if(order.isPresent()){
-            return orderMapper.orderToOrderDto(order.get());
-        }
-        else {
-            throw new EntityNotFoundException(
-                    String.format("Order with ID(%d) not found for user with ID(%d)", orderId, userId));
-        }
-    }
-
     public OrderDto getOrderById(Long orderId){
         Order order = orderRepository.findById(orderId).orElseThrow(() ->
                 new EntityNotFoundException(String.format("Order with ID(%d) doesn't exist.", orderId)));
