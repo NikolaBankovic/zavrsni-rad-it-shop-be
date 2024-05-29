@@ -22,9 +22,8 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    private double price;
+
     private int quantity;
 
-    public double getTotalPrice() {
-        return product.getPrice() * quantity;
-    }
 }

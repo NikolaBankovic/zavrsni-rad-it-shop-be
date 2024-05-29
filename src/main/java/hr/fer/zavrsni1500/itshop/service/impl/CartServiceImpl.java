@@ -26,10 +26,11 @@ public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
 
     public CartDto viewCart(User user) {
-        Cart cart = cartRepository.findByUserId(user.getId());
-        if (cart == null) {
-            cart = createNewCart(user);
+        Optional<Cart> cartOptional = cartRepository.findByUserId(user.getId());
+        if (cartOptional.isPresent()) {
+            return cartMapper.cartToCartDto(cartOptional.get());
         }
+        Cart cart = createNewCart(user);
         return cartMapper.cartToCartDto(cart);
     }
 
@@ -76,11 +77,8 @@ public class CartServiceImpl implements CartService {
     }
 
     private Cart getCart(User user) {
-        Cart cart = cartRepository.findByUserId(user.getId());
-        if (cart == null) {
-            cart = createNewCart(user);
-        }
-        return cart;
+        Optional<Cart> cartOptional = cartRepository.findByUserId(user.getId());
+        return cartOptional.orElseGet(() -> createNewCart(user));
     }
 
     private Cart createNewCart(User user) {
