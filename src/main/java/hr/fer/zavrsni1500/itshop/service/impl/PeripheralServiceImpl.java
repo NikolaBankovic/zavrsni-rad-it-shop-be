@@ -8,7 +8,10 @@ import hr.fer.zavrsni1500.itshop.util.mapper.PeripheralMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -27,16 +30,22 @@ public class PeripheralServiceImpl implements PeripheralService {
         return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll());
     }
 
-    public PeripheralDto createPeripheral(final PeripheralDto peripheralDto) {
+    public PeripheralDto createPeripheral(final PeripheralDto peripheralDto, final MultipartFile image) throws IOException {
         final Peripheral peripheral = peripheralMapper.peripheralDtoToPeripheral(peripheralDto);
+        peripheral.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.save(peripheral));
     }
 
-    public PeripheralDto updatePeripheral(final Long id, final PeripheralDto updatePeripheralDto) {
+    public PeripheralDto updatePeripheral(final Long id,
+                                          final PeripheralDto updatePeripheralDto,
+                                          final MultipartFile image) throws IOException {
         final Peripheral peripheral = peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
 
         final Peripheral updatePeripheral = peripheralMapper.peripheralDtoToPeripheral(updatePeripheralDto);
+        if(!image.isEmpty()) {
+            updatePeripheral.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        }
         updatePeripheral.setId(peripheral.getId());
 
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.save(updatePeripheral));

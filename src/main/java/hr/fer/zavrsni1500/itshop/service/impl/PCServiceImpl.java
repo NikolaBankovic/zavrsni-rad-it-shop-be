@@ -8,7 +8,10 @@ import hr.fer.zavrsni1500.itshop.util.mapper.PCMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -27,16 +30,20 @@ public class PCServiceImpl implements PCService {
         return pcMapper.pcsToPcDtos(pcRepository.findAll());
     }
 
-    public PCDto createPC(final PCDto pcDto) {
+    public PCDto createPC(final PCDto pcDto, final MultipartFile image) throws IOException {
         final PC pc = pcMapper.pcDtoToPc(pcDto);
+        pc.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         return pcMapper.pcToPcDto(pcRepository.save(pc));
     }
 
-    public PCDto updatePC(final Long id, final PCDto updatePCdto) {
+    public PCDto updatePC(final Long id, final PCDto updatePCdto, final MultipartFile image) throws IOException {
         final PC pc = pcRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC with ID(%d) not found!", id)));
 
         final PC updatePC = pcMapper.pcDtoToPc(updatePCdto);
+        if(!image.isEmpty()) {
+            updatePC.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        }
         updatePC.setId(pc.getId());
 
         return pcMapper.pcToPcDto(pcRepository.save(updatePC));

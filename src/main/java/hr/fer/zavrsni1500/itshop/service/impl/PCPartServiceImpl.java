@@ -8,7 +8,10 @@ import hr.fer.zavrsni1500.itshop.util.mapper.PCPartMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -26,16 +29,20 @@ public class PCPartServiceImpl implements PCPartService {
         return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findAll());
     }
 
-    public PCPartDto createPCPart(final PCPartDto pcPartDto) {
+    public PCPartDto createPCPart(final PCPartDto pcPartDto, final MultipartFile image) throws IOException {
         final PCPart pcPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
+        pcPart.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.save(pcPart));
     }
 
-    public PCPartDto updatePCPart(final Long id, final PCPartDto pcPartDto) {
+    public PCPartDto updatePCPart(final Long id, final PCPartDto pcPartDto, final MultipartFile image) throws IOException {
         final PCPart pcPart = pcPartRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id)));
 
         final PCPart updatePCPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
+        if(!image.isEmpty()) {
+            updatePCPart.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        }
         updatePCPart.setId(pcPart.getId());
 
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.save(pcPart));

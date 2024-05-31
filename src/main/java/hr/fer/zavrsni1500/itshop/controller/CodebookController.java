@@ -23,27 +23,27 @@ public class CodebookController {
 
     @GetMapping("/pc-type")
     public List<String> pcType() {
-        return Arrays.stream(PCType.values()).map(PCType::getPcTypeName).toList();
+        return Arrays.stream(PCType.values()).map(PCType::toString).toList();
     }
 
     @GetMapping("/pc-part-type")
     public List<String> pcPartType() {
-        return Arrays.stream(PCPartType.values()).map(PCPartType::getPartTypeName).toList();
+        return Arrays.stream(PCPartType.values()).map(PCPartType::toString).toList();
     }
 
     @GetMapping("/peripheral-type")
     public List<String> peripheralType() {
-        return Arrays.stream(PeripheralType.values()).map(PeripheralType::getPeripheralType).toList();
+        return Arrays.stream(PeripheralType.values()).map(PeripheralType::toString).toList();
     }
 
     @GetMapping("/software-type")
     public List<String> softwareType() {
-        return Arrays.stream(SoftwareType.values()).map(SoftwareType::getSoftwareType).toList();
+        return Arrays.stream(SoftwareType.values()).map(SoftwareType::toString).toList();
     }
 
     @GetMapping("/used-state")
     public List<String> usedState() {
-        return Arrays.stream(UsedState.values()).map(UsedState::getUsedState).toList();
+        return Arrays.stream(UsedState.values()).map(UsedState::toString).toList();
     }
 
 }

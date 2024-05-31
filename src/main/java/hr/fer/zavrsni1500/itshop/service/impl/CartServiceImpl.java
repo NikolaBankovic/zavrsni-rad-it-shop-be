@@ -65,6 +65,7 @@ public class CartServiceImpl implements CartService {
         if (cartItem.isPresent()) {
             cart.getCartItemList().remove(cartItem.get());
             cartRepository.save(cart);
+            cartItemRepository.delete(cartItem.get());
         }
 
         return cartMapper.cartToCartDto(cart);
@@ -72,8 +73,9 @@ public class CartServiceImpl implements CartService {
 
     public CartDto clearCart(final User user) {
         final Cart cart = getCart(user);
-        cart.getCartItemList().clear();
-        return cartMapper.cartToCartDto(cartRepository.save(cart));
+        cartRepository.delete(cart);
+        final Cart newCart = createNewCart(user);
+        return cartMapper.cartToCartDto(cartRepository.save(newCart));
     }
 
     private Cart getCart(final User user) {

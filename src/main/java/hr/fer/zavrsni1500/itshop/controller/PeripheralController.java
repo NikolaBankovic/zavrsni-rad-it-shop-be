@@ -5,7 +5,9 @@ import hr.fer.zavrsni1500.itshop.service.PeripheralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -27,14 +29,19 @@ public class PeripheralController {
 
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PeripheralDto createPeripheral(@RequestBody final PeripheralDto peripheralDto) {
-        return peripheralService.createPeripheral(peripheralDto);
+    public PeripheralDto createPeripheral(
+            @RequestPart("peripheralDto") final PeripheralDto peripheralDto,
+            @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
+        return peripheralService.createPeripheral(peripheralDto, image);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public PeripheralDto updatePeripheral(@PathVariable final Long id, @RequestBody final PeripheralDto peripheralDto) {
-        return peripheralService.updatePeripheral(id, peripheralDto);
+    public PeripheralDto updatePeripheral(
+            @PathVariable final Long id,
+            @RequestPart("peripheralDto") final PeripheralDto peripheralDto,
+            @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
+        return peripheralService.updatePeripheral(id, peripheralDto, image);
     }
 
     @DeleteMapping("/{id}")

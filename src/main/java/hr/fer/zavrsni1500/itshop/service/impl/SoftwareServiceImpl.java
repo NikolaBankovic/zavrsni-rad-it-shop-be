@@ -8,7 +8,10 @@ import hr.fer.zavrsni1500.itshop.util.mapper.SoftwareMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -27,16 +30,20 @@ public class SoftwareServiceImpl implements SoftwareService {
         return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findAll());
     }
 
-    public SoftwareDto createSoftware(final SoftwareDto softwareDto) {
+    public SoftwareDto createSoftware(final SoftwareDto softwareDto, final MultipartFile image) throws IOException {
         final Software software = softwareMapper.softwareDtoToSoftware(softwareDto);
+        software.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         return softwareMapper.softwareToSoftwareDto(softwareRepository.save(software));
     }
 
-    public SoftwareDto updateSoftware(final Long id, final SoftwareDto softwareDto) {
+    public SoftwareDto updateSoftware(final Long id, final SoftwareDto softwareDto, final MultipartFile image) throws IOException {
         final Software software = softwareRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
 
         final Software updatedSoftware = softwareMapper.softwareDtoToSoftware(softwareDto);
+        if(!image.isEmpty()) {
+            updatedSoftware.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        }
         updatedSoftware.setId(software.getId());
 
         return softwareMapper.softwareToSoftwareDto(softwareRepository.save(updatedSoftware));

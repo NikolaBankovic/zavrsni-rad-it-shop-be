@@ -5,7 +5,9 @@ import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -27,14 +29,17 @@ public class SoftwareController {
 
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public SoftwareDto createSoftware(@RequestBody final SoftwareDto softwareDto) {
-        return softwareService.createSoftware(softwareDto);
+    public SoftwareDto createSoftware(@RequestPart("softwareDto") final SoftwareDto softwareDto,
+                                      @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
+        return softwareService.createSoftware(softwareDto, image);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public SoftwareDto updateSoftware(@PathVariable final Long id, @RequestBody final SoftwareDto softwareDto) {
-        return softwareService.updateSoftware(id, softwareDto);
+    public SoftwareDto updateSoftware(@PathVariable final Long id,
+                                      @RequestPart("softwareDto") final SoftwareDto softwareDto,
+                                      @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
+        return softwareService.updateSoftware(id, softwareDto, image);
     }
 
     @DeleteMapping("/{id}")
