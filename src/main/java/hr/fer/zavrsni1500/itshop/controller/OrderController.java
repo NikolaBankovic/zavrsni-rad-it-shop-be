@@ -35,7 +35,7 @@ public class OrderController {
 
     @PostMapping()
     public OrderDto createOrder() throws EmptyCartException {
-        User user = currentUserService.getCurrentUser();
+        final User user = currentUserService.getCurrentUser();
         return orderService.createOrder(user);
     }
 
