@@ -7,6 +7,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@DiscriminatorValue(ProductType.SOFTWARE)
 public class Software extends Product{
 
     @Enumerated(EnumType.STRING)

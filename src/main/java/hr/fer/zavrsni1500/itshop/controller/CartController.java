@@ -4,11 +4,13 @@ import hr.fer.zavrsni1500.itshop.dto.CartDto;
 import hr.fer.zavrsni1500.itshop.service.CartService;
 import hr.fer.zavrsni1500.itshop.service.CurrentUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/cart")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
 public class CartController {
 
     private final CartService cartService;

@@ -18,7 +18,7 @@ public class PeripheralServiceImpl implements PeripheralService {
     private final PeripheralRepository peripheralRepository;
     private final PeripheralMapper peripheralMapper;
 
-    public PeripheralDto getPeripheralById(Long id) {
+    public PeripheralDto getPeripheralById(final Long id) {
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id))));
     }
@@ -27,23 +27,23 @@ public class PeripheralServiceImpl implements PeripheralService {
         return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll());
     }
 
-    public PeripheralDto createPeripheral(PeripheralDto peripheralDto) {
-        Peripheral peripheral = peripheralMapper.peripheralDtoToPeripheral(peripheralDto);
+    public PeripheralDto createPeripheral(final PeripheralDto peripheralDto) {
+        final Peripheral peripheral = peripheralMapper.peripheralDtoToPeripheral(peripheralDto);
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.save(peripheral));
     }
 
-    public PeripheralDto updatePeripheral(Long id, PeripheralDto updatePeripheralDto) {
-        Peripheral peripheral = peripheralRepository.findById(id)
+    public PeripheralDto updatePeripheral(final Long id, final PeripheralDto updatePeripheralDto) {
+        final Peripheral peripheral = peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
 
-        Peripheral updatePeripheral = peripheralMapper.peripheralDtoToPeripheral(updatePeripheralDto);
+        final Peripheral updatePeripheral = peripheralMapper.peripheralDtoToPeripheral(updatePeripheralDto);
         updatePeripheral.setId(peripheral.getId());
 
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.save(updatePeripheral));
     }
 
-    public void deletePeripheral(Long id) {
-        Peripheral peripheral = peripheralRepository.findById(id)
+    public void deletePeripheral(final Long id) {
+        final Peripheral peripheral = peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
         peripheralRepository.delete(peripheral);
     }

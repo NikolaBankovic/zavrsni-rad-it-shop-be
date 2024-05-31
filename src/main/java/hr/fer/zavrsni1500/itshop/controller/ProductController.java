@@ -3,6 +3,7 @@ package hr.fer.zavrsni1500.itshop.controller;
 import hr.fer.zavrsni1500.itshop.model.Product;
 import hr.fer.zavrsni1500.itshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteProduct(@PathVariable final Long id) {
         productService.deleteProduct(id);
     }

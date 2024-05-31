@@ -17,7 +17,7 @@ public enum PeripheralType {
 
     private final String peripheralType;
 
-    PeripheralType(String peripheralType) {
+    PeripheralType(final String peripheralType) {
         this.peripheralType = peripheralType;
     }
 }

@@ -15,7 +15,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
-    public Product getProductById(Long id) {
+    public Product getProductById(final Long id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id)));
     }
@@ -24,8 +24,8 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-    public void deleteProduct(Long id) {
-        Product product = productRepository.findById(id)
+    public void deleteProduct(final Long id) {
+        final Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id)));
         productRepository.delete(product);
     }

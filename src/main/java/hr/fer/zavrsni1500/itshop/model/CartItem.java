@@ -26,7 +26,7 @@ public class CartItem {
 
     private int quantity;
 
-    public CartItem(Cart cart, Product product, int quantity) {
+    public CartItem(final Cart cart, final Product product, final int quantity) {
         this.cart = cart;
         this.product = product;
         this.quantity = quantity;

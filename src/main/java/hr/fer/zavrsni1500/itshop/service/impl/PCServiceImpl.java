@@ -18,7 +18,7 @@ public class PCServiceImpl implements PCService {
     private final PCRepository pcRepository;
     private final PCMapper pcMapper;
 
-    public PCDto getPCById(Long id) {
+    public PCDto getPCById(final Long id) {
         return pcMapper.pcToPcDto(pcRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id))));
     }
@@ -27,23 +27,23 @@ public class PCServiceImpl implements PCService {
         return pcMapper.pcsToPcDtos(pcRepository.findAll());
     }
 
-    public PCDto createPC(PCDto pcDto) {
-        PC pc = pcMapper.pcDtoToPc(pcDto);
+    public PCDto createPC(final PCDto pcDto) {
+        final PC pc = pcMapper.pcDtoToPc(pcDto);
         return pcMapper.pcToPcDto(pcRepository.save(pc));
     }
 
-    public PCDto updatePC(Long id, PCDto updatePCdto) {
-        PC pc = pcRepository.findById(id)
+    public PCDto updatePC(final Long id, final PCDto updatePCdto) {
+        final PC pc = pcRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC with ID(%d) not found!", id)));
 
-        PC updatePC = pcMapper.pcDtoToPc(updatePCdto);
+        final PC updatePC = pcMapper.pcDtoToPc(updatePCdto);
         updatePC.setId(pc.getId());
 
         return pcMapper.pcToPcDto(pcRepository.save(updatePC));
     }
 
-    public void deletePC(Long id) {
-        PC pc = pcRepository.findById(id)
+    public void deletePC(final Long id) {
+        final PC pc = pcRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC with ID(%d) not found!", id)));
         pcRepository.delete(pc);
     }

@@ -17,7 +17,7 @@ public class PCPartServiceImpl implements PCPartService {
     private final PCPartRepository pcPartRepository;
     private final PCPartMapper pcPartMapper;
 
-    public PCPartDto getPCPartById(Long id) {
+    public PCPartDto getPCPartById(final Long id) {
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id))));
     }
@@ -26,23 +26,23 @@ public class PCPartServiceImpl implements PCPartService {
         return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findAll());
     }
 
-    public PCPartDto createPCPart(PCPartDto pcPartDto) {
-        PCPart pcPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
+    public PCPartDto createPCPart(final PCPartDto pcPartDto) {
+        final PCPart pcPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.save(pcPart));
     }
 
-    public PCPartDto updatePCPart(Long id, PCPartDto pcPartDto) {
-        PCPart pcPart = pcPartRepository.findById(id)
+    public PCPartDto updatePCPart(final Long id, final PCPartDto pcPartDto) {
+        final PCPart pcPart = pcPartRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id)));
 
-        PCPart updatePCPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
+        final PCPart updatePCPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
         updatePCPart.setId(pcPart.getId());
 
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.save(pcPart));
     }
 
-    public void deletePCPart(Long id) {
-        PCPart pcPart = pcPartRepository.findById(id)
+    public void deletePCPart(final Long id) {
+        final PCPart pcPart = pcPartRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id)));
         pcPartRepository.delete(pcPart);
     }

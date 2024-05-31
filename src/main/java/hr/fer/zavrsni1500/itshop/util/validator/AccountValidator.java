@@ -42,7 +42,7 @@ public class AccountValidator {
 
     }
 
-    public void emailExists(String email) {
+    public void emailExists(final String email) {
         if(userRepository.existsByEmail(email)) {
             throw new EntityExistsException("This email address is already in use!");
         }

@@ -8,6 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "product")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "product_type", discriminatorType = DiscriminatorType.STRING)
 public class Product {
 
     @Id
@@ -19,4 +21,5 @@ public class Product {
     private double price;
 
     private String description;
+
 }

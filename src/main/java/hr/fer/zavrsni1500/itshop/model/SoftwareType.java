@@ -11,7 +11,7 @@ public enum SoftwareType {
 
     private final String softwareType;
 
-    SoftwareType(String softwareType) {
+    SoftwareType(final String softwareType) {
         this.softwareType = softwareType;
     }
 }

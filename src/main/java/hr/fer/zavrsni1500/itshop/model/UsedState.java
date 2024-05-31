@@ -9,7 +9,7 @@ public enum UsedState {
 
     private final String usedState;
 
-    UsedState(String usedState) {
+    UsedState(final String usedState) {
         this.usedState = usedState;
     }
 

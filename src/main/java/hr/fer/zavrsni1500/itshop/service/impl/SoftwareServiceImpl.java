@@ -18,7 +18,7 @@ public class SoftwareServiceImpl implements SoftwareService {
     private final SoftwareRepository softwareRepository;
     private final SoftwareMapper softwareMapper;
 
-    public SoftwareDto getSoftwareById(Long id) {
+    public SoftwareDto getSoftwareById(final Long id) {
         return softwareMapper.softwareToSoftwareDto(softwareRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id))));
     }
@@ -27,23 +27,23 @@ public class SoftwareServiceImpl implements SoftwareService {
         return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findAll());
     }
 
-    public SoftwareDto createSoftware(SoftwareDto softwareDto) {
-        Software software = softwareMapper.softwareDtoToSoftware(softwareDto);
+    public SoftwareDto createSoftware(final SoftwareDto softwareDto) {
+        final Software software = softwareMapper.softwareDtoToSoftware(softwareDto);
         return softwareMapper.softwareToSoftwareDto(softwareRepository.save(software));
     }
 
-    public SoftwareDto updateSoftware(Long id, SoftwareDto softwareDto) {
-        Software software = softwareRepository.findById(id)
+    public SoftwareDto updateSoftware(final Long id, final SoftwareDto softwareDto) {
+        final Software software = softwareRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
 
-        Software updatedSoftware = softwareMapper.softwareDtoToSoftware(softwareDto);
+        final Software updatedSoftware = softwareMapper.softwareDtoToSoftware(softwareDto);
         updatedSoftware.setId(software.getId());
 
         return softwareMapper.softwareToSoftwareDto(softwareRepository.save(updatedSoftware));
     }
 
-    public void deleteSoftware(Long id) {
-        Software software = softwareRepository.findById(id)
+    public void deleteSoftware(final Long id) {
+        final Software software = softwareRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
         softwareRepository.delete(software);
     }
