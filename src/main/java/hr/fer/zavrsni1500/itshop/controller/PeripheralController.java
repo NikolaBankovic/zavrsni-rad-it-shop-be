@@ -15,7 +15,7 @@ public class PeripheralController {
     private final PeripheralService peripheralService;
 
     @GetMapping("/{id}")
-    public PeripheralDto getPeripheralById(@PathVariable Long id) {
+    public PeripheralDto getPeripheralById(@PathVariable final Long id) {
         return peripheralService.getPeripheralById(id);
     }
 
@@ -25,17 +25,17 @@ public class PeripheralController {
     }
 
     @PostMapping()
-    public PeripheralDto createPeripheral(@RequestBody PeripheralDto peripheralDto) {
+    public PeripheralDto createPeripheral(@RequestBody final PeripheralDto peripheralDto) {
         return peripheralService.createPeripheral(peripheralDto);
     }
 
     @PutMapping("/{id}")
-    public PeripheralDto updatePeripheral(@PathVariable Long id, @RequestBody PeripheralDto peripheralDto) {
+    public PeripheralDto updatePeripheral(@PathVariable final Long id, @RequestBody final PeripheralDto peripheralDto) {
         return peripheralService.updatePeripheral(id, peripheralDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePeripheral(@PathVariable Long id) {
+    public void deletePeripheral(@PathVariable final Long id) {
         peripheralService.deletePeripheral(id);
     }
 }

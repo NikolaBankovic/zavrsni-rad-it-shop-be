@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 public class InvalidTokenException extends Exception {
-    public InvalidTokenException(String message) {
+    public InvalidTokenException(final String message) {
         super(message);
     }
 }

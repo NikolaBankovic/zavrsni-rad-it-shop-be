@@ -15,7 +15,7 @@ public class SoftwareController {
     private final SoftwareService softwareService;
 
     @GetMapping("/{id}")
-    public SoftwareDto getSoftwareById(@PathVariable Long id) {
+    public SoftwareDto getSoftwareById(@PathVariable final Long id) {
         return softwareService.getSoftwareById(id);
     }
 
@@ -25,17 +25,17 @@ public class SoftwareController {
     }
 
     @PostMapping()
-    public SoftwareDto createSoftware(@RequestBody SoftwareDto softwareDto) {
+    public SoftwareDto createSoftware(@RequestBody final SoftwareDto softwareDto) {
         return softwareService.createSoftware(softwareDto);
     }
 
     @PutMapping("/{id}")
-    public SoftwareDto updateSoftware(@PathVariable Long id, @RequestBody SoftwareDto softwareDto) {
+    public SoftwareDto updateSoftware(@PathVariable final Long id, @RequestBody final SoftwareDto softwareDto) {
         return softwareService.updateSoftware(id, softwareDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSoftware(@PathVariable Long id) {
+    public void deleteSoftware(@PathVariable final Long id) {
         softwareService.deleteSoftware(id);
     }
 }

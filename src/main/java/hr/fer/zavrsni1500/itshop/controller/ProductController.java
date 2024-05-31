@@ -10,12 +10,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/product")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200")
 public class ProductController {
 
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public Product getProductById(@PathVariable final Long id) {
         return productService.getProductById(id);
     }
 
@@ -25,7 +26,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
+    public void deleteProduct(@PathVariable final Long id) {
         productService.deleteProduct(id);
     }
 }

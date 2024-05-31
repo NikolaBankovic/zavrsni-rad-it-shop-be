@@ -15,7 +15,7 @@ public class PCPartController {
     private final PCPartService pcPartService;
 
     @GetMapping("/{id}")
-    public PCPartDto getPCPartById(@PathVariable Long id) {
+    public PCPartDto getPCPartById(@PathVariable final Long id) {
         return pcPartService.getPCPartById(id);
     }
 
@@ -25,17 +25,17 @@ public class PCPartController {
     }
 
     @PostMapping()
-    public PCPartDto createPCPart(@RequestBody PCPartDto pcPartDto) {
+    public PCPartDto createPCPart(@RequestBody final PCPartDto pcPartDto) {
         return pcPartService.createPCPart(pcPartDto);
     }
 
     @PutMapping("/{id}")
-    public PCPartDto updatePCPart(@PathVariable Long id, @RequestBody PCPartDto pcPartDto) {
+    public PCPartDto updatePCPart(@PathVariable final Long id, @RequestBody final PCPartDto pcPartDto) {
         return pcPartService.updatePCPart(id, pcPartDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePCPart(@PathVariable Long id) {
+    public void deletePCPart(@PathVariable final Long id) {
         pcPartService.deletePCPart(id);
     }
 }

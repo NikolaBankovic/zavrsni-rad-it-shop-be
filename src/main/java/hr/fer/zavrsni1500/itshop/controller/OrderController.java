@@ -24,12 +24,12 @@ public class OrderController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<OrderDto> getOrdersByUserId(@PathVariable Long userId) {
+    public List<OrderDto> getOrdersByUserId(@PathVariable final Long userId) {
         return orderService.getOrdersByUserId(userId);
     }
 
     @GetMapping("/{orderId}")
-    public OrderDto getOrderByOrderId(@PathVariable Long orderId) {
+    public OrderDto getOrderByOrderId(@PathVariable final Long orderId) {
         return orderService.getOrderById(orderId);
     }
 
@@ -40,12 +40,12 @@ public class OrderController {
     }
 
     @PutMapping()
-    public OrderDto updateOrder(@RequestBody OrderDto orderDto) {
+    public OrderDto updateOrder(@RequestBody final OrderDto orderDto) {
         return orderService.updateOrder(orderDto);
     }
 
     @DeleteMapping("/{orderId}")
-    public void deleteOrder(@PathVariable Long orderId) {
+    public void deleteOrder(@PathVariable final Long orderId) {
         orderService.deleteOrder(orderId);
     }
 }

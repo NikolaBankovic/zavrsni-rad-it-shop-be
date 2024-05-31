@@ -20,12 +20,12 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public CartDto addItemToCart(@RequestParam Long productId, @RequestParam int quantity) {
+    public CartDto addItemToCart(@RequestParam final Long productId, @RequestParam final int quantity) {
         return cartService.addItem(currentUserService.getCurrentUser(), productId, quantity);
     }
 
     @PostMapping("/remove")
-    public CartDto removeItemFromCart(@RequestParam Long productId) {
+    public CartDto removeItemFromCart(@RequestParam final Long productId) {
         return cartService.removeItem(currentUserService.getCurrentUser(), productId);
     }
 

@@ -15,7 +15,7 @@ public class PCController {
     private final PCService pcService;
 
     @GetMapping("/{id}")
-    public PCDto getPCById(@PathVariable Long id) {
+    public PCDto getPCById(@PathVariable final Long id) {
         return pcService.getPCById(id);
     }
 
@@ -25,17 +25,17 @@ public class PCController {
     }
 
     @PostMapping()
-    public PCDto createPC(@RequestBody PCDto pcDto) {
+    public PCDto createPC(@RequestBody final PCDto pcDto) {
         return pcService.createPC(pcDto);
     }
 
     @PutMapping("/{id}")
-    public PCDto updatePC(@PathVariable Long id, @RequestBody PCDto pcDto) {
+    public PCDto updatePC(@PathVariable final Long id, @RequestBody final PCDto pcDto) {
         return pcService.updatePC(id, pcDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deletePC(@PathVariable Long id) {
+    public void deletePC(@PathVariable final Long id) {
         pcService.deletePC(id);
     }
 }
