@@ -29,30 +29,30 @@ public class OrderServiceImpl implements OrderService {
     private final UserMapper userMapper;
 
     public List<OrderDto> getAllOrders(){
-        List<Order> orders = orderRepository.findAll();
+        final List<Order> orders = orderRepository.findAll();
         return orderMapper.ordersToOrderDtos(orders);
     }
 
-    public List<OrderDto> getOrdersByUserId(Long userId){
-        List<Order> orders = orderRepository.findAllByUserId(userId);
+    public List<OrderDto> getOrdersByUserId(final Long userId){
+        final List<Order> orders = orderRepository.findAllByUserId(userId);
         return orderMapper.ordersToOrderDtos(orders);
     }
 
-    public OrderDto getOrderById(Long orderId){
-        Order order = orderRepository.findById(orderId).orElseThrow(() ->
+    public OrderDto getOrderById(final Long orderId){
+        final Order order = orderRepository.findById(orderId).orElseThrow(() ->
                 new EntityNotFoundException(String.format("Order with ID(%d) doesn't exist.", orderId)));
 
         return orderMapper.orderToOrderDto(order);
     }
 
-    public OrderDto createOrder(User user) throws EmptyCartException {
-        Cart cart = cartRepository.findByUserId(user.getId())
+    public OrderDto createOrder(final User user) throws EmptyCartException {
+        final Cart cart = cartRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new EmptyCartException("Cart is empty"));
 
-        List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.getCartItemList());
+        final List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.getCartItemList());
         orderItems.forEach(orderItem -> orderItem.setPrice(orderItem.getProduct().getPrice()));
 
-        Order order = new Order();
+        final Order order = new Order();
         order.setUser(user);
         order.setOrderItemsList(orderItems);
         order.setTotalAmount();
@@ -62,15 +62,15 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
-    public OrderDto updateOrder(OrderDto orderDto){
-        Order order = orderRepository.findById(orderDto.id()).orElseThrow(() ->
+    public OrderDto updateOrder(final OrderDto orderDto){
+        final Order order = orderRepository.findById(orderDto.id()).orElseThrow(() ->
                 new EntityNotFoundException(String.format("Order with ID(%d) doesn't exist.", orderDto.id())));
         order.setUser(userMapper.userDtoToUser(orderDto.user()));
         order.setOrderItemsList(orderItemMapper.orderItemDtosToOrderItems(orderDto.orderItems()));
         return orderMapper.orderToOrderDto(orderRepository.save(order));
     }
 
-    public void deleteOrder(Long orderId){
+    public void deleteOrder(final Long orderId){
         orderRepository.deleteById(orderId);
     }
 }

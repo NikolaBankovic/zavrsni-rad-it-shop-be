@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void createUser(RegisterDto registerDto) {
+    public void createUser(final RegisterDto registerDto) {
         accountValidator.usernameTaken(registerDto.username());
         accountValidator.emailExists(registerDto.email());
 
@@ -51,8 +51,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public void updateUser(Long id, UpdateUserDto updatedUser) {
-        User user = userRepository.findById(id)
+    public void updateUser(final Long id, final UpdateUserDto updatedUser) {
+        final User user = userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with ID(%d) doesn't exist!", id)));
 
         if (!user.getUsername().equals(updatedUser.username())) {
@@ -70,8 +70,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    public void changeUserPassword(Long userId, PasswordChangeDto changePasswordDto) throws WrongPasswordException, PasswordComplexityException, SamePasswordException {
-        User user = userRepository.findById(userId)
+    public void changeUserPassword(final Long userId, final PasswordChangeDto changePasswordDto) throws WrongPasswordException, PasswordComplexityException, SamePasswordException {
+        final User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("User with ID(%d) doesn't exist!", userId)));
         if (!passwordEncoder.matches(changePasswordDto.oldPassword(), user.getPassword())) {
             throw new WrongPasswordException("Old password is incorrect");

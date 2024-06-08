@@ -7,6 +7,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@DiscriminatorValue(ProductType.PERIPHERAL)
 public class Peripheral extends Product{
 
     @Enumerated(EnumType.STRING)

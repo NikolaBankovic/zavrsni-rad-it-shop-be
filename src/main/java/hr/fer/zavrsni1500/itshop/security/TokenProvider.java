@@ -57,7 +57,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getUsername(String token) {
+    public String getUsername(final String token) {
         final SecretKey key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
         Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
         return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();

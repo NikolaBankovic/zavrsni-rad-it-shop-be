@@ -8,7 +8,10 @@ import hr.fer.zavrsni1500.itshop.util.mapper.PeripheralMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -18,7 +21,7 @@ public class PeripheralServiceImpl implements PeripheralService {
     private final PeripheralRepository peripheralRepository;
     private final PeripheralMapper peripheralMapper;
 
-    public PeripheralDto getPeripheralById(Long id) {
+    public PeripheralDto getPeripheralById(final Long id) {
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id))));
     }
@@ -27,23 +30,29 @@ public class PeripheralServiceImpl implements PeripheralService {
         return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll());
     }
 
-    public PeripheralDto createPeripheral(PeripheralDto peripheralDto) {
-        Peripheral peripheral = peripheralMapper.peripheralDtoToPeripheral(peripheralDto);
+    public PeripheralDto createPeripheral(final PeripheralDto peripheralDto, final MultipartFile image) throws IOException {
+        final Peripheral peripheral = peripheralMapper.peripheralDtoToPeripheral(peripheralDto);
+        peripheral.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.save(peripheral));
     }
 
-    public PeripheralDto updatePeripheral(Long id, PeripheralDto updatePeripheralDto) {
-        Peripheral peripheral = peripheralRepository.findById(id)
+    public PeripheralDto updatePeripheral(final Long id,
+                                          final PeripheralDto updatePeripheralDto,
+                                          final MultipartFile image) throws IOException {
+        final Peripheral peripheral = peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
 
-        Peripheral updatePeripheral = peripheralMapper.peripheralDtoToPeripheral(updatePeripheralDto);
+        final Peripheral updatePeripheral = peripheralMapper.peripheralDtoToPeripheral(updatePeripheralDto);
+        if(!image.isEmpty()) {
+            updatePeripheral.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
+        }
         updatePeripheral.setId(peripheral.getId());
 
         return peripheralMapper.peripheralToPeripheralDto(peripheralRepository.save(updatePeripheral));
     }
 
-    public void deletePeripheral(Long id) {
-        Peripheral peripheral = peripheralRepository.findById(id)
+    public void deletePeripheral(final Long id) {
+        final Peripheral peripheral = peripheralRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
         peripheralRepository.delete(peripheral);
     }

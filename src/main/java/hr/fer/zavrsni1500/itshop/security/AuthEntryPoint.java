@@ -18,7 +18,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper;
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+    public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException {
         final String body = "You need to login to perform this action!";
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

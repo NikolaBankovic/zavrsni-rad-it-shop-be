@@ -7,6 +7,7 @@ public record PeripheralDto(
         String name,
         double price,
         String description,
+        String image,
         PeripheralType peripheralType
 ) {
 }

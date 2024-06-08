@@ -18,11 +18,11 @@ public enum PCPartType {
     OPTICAL_DRIVE("Optički uređaji"),
     FAN("Ventilatori"),
     THERMAL_PASTE("Termalne paste"),
-    SOUND_CARD("Zvučne kartice");
+    AUDIO_CARD("Zvučne kartice");
 
     private final String partTypeName;
 
-    PCPartType(String partTypeName) {
+    PCPartType(final String partTypeName) {
         this.partTypeName = partTypeName;
     }
 

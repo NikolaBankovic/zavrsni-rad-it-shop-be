@@ -1,12 +1,12 @@
 package hr.fer.zavrsni1500.itshop.service;
 
-import hr.fer.zavrsni1500.itshop.model.Product;
+import hr.fer.zavrsni1500.itshop.dto.ProductDto;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Product getProductById(Long id);
-    List<Product> getAllProducts();
+    ProductDto getProductById(Long id);
+    List<ProductDto> getAllProducts();
     void deleteProduct(Long id);
 }
