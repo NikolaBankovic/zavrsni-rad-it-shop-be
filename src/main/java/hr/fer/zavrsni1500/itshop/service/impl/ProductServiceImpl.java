@@ -1,8 +1,10 @@
 package hr.fer.zavrsni1500.itshop.service.impl;
 
+import hr.fer.zavrsni1500.itshop.dto.ProductDto;
 import hr.fer.zavrsni1500.itshop.model.Product;
 import hr.fer.zavrsni1500.itshop.repository.ProductRepository;
 import hr.fer.zavrsni1500.itshop.service.ProductService;
+import hr.fer.zavrsni1500.itshop.util.mapper.ProductMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,14 +16,18 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
-    public Product getProductById(final Long id) {
-        return productRepository.findById(id)
+    public ProductDto getProductById(final Long id) {
+        final Product product = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id)));
+
+        return productMapper.productToProductDto(product);
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductDto> getAllProducts() {
+        final List<Product> products = productRepository.findAll();
+        return productMapper.productsToProductDtos(products);
     }
 
     public void deleteProduct(final Long id) {

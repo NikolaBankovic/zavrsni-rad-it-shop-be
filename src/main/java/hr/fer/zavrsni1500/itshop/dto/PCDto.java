@@ -7,6 +7,7 @@ public record PCDto(
         String name,
         double price,
         String description,
+        String image,
         PCType pcType
 ) {
 }

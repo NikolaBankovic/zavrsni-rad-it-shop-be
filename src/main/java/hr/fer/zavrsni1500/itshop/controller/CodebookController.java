@@ -1,5 +1,6 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
+import hr.fer.zavrsni1500.itshop.dto.CategoryDto;
 import hr.fer.zavrsni1500.itshop.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,4 +47,17 @@ public class CodebookController {
         return Arrays.stream(UsedState.values()).map(UsedState::toString).toList();
     }
 
+    @GetMapping("/category")
+    public List<CategoryDto> categories() {
+        return ProductType.getAllProductTypes().stream()
+                .map(productType ->
+                    switch (productType) {
+                        case ProductType.PC -> new CategoryDto(productType, pcType());
+                        case ProductType.PC_PART -> new CategoryDto(productType, pcPartType());
+                        case ProductType.PERIPHERAL -> new CategoryDto(productType, peripheralType());
+                        case ProductType.SOFTWARE -> new CategoryDto(productType, softwareType());
+                        default -> throw new IllegalStateException("Unexpected value: " + productType);
+                    })
+                .toList();
+    }
 }

@@ -1,6 +1,6 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
-import hr.fer.zavrsni1500.itshop.model.Product;
+import hr.fer.zavrsni1500.itshop.dto.ProductDto;
 import hr.fer.zavrsni1500.itshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,12 +17,12 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable final Long id) {
+    public ProductDto getProductById(@PathVariable final Long id) {
         return productService.getProductById(id);
     }
 
     @GetMapping("/all")
-    public List<Product> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         return productService.getAllProducts();
     }
 

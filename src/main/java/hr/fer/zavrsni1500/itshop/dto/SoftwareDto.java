@@ -7,6 +7,7 @@ public record SoftwareDto(
         String name,
         double price,
         String description,
+        String image,
         SoftwareType softwareType
 ) {
 }

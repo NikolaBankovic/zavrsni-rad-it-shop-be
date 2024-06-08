@@ -1,17 +1,20 @@
 package hr.fer.zavrsni1500.itshop.dto;
 
-import hr.fer.zavrsni1500.itshop.model.PCPartType;
-import hr.fer.zavrsni1500.itshop.model.UsedState;
+import hr.fer.zavrsni1500.itshop.model.*;
 
-public record PCPartDto(
-        Long id,
+public record ProductDto(
+        int id,
+        String productType,
         String name,
         double price,
         String description,
         String image,
+        PCType pcType,
         PCPartType pcPartType,
+        PeripheralType peripheralType,
+        SoftwareType softwareType,
         UsedState usedState,
-        Long warrantyLength,
+        Integer warrantyLength,
         String manufacturerName,
         String manufacturerCatalogueNumber,
         String linkToPartOnManufacturerWebsite
