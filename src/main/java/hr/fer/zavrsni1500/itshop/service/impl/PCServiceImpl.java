@@ -2,7 +2,9 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
 import hr.fer.zavrsni1500.itshop.model.PC;
+import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
 import hr.fer.zavrsni1500.itshop.repository.PCRepository;
+import hr.fer.zavrsni1500.itshop.repository.specification.PCSpecification;
 import hr.fer.zavrsni1500.itshop.service.PCService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PCMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,8 +28,9 @@ public class PCServiceImpl implements PCService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id))));
     }
 
-    public List<PCDto> getAllPCs() {
-        return pcMapper.pcsToPcDtos(pcRepository.findAll());
+    public List<PCDto> getAllPCs(final PCFilter filter) {
+        final PCSpecification specification = new PCSpecification(filter);
+        return pcMapper.pcsToPcDtos(pcRepository.findAll(specification));
     }
 
     public PCDto createPC(final PCDto pcDto, final MultipartFile image) throws IOException {

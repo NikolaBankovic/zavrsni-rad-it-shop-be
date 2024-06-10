@@ -2,7 +2,9 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.ProductDto;
 import hr.fer.zavrsni1500.itshop.model.Product;
+import hr.fer.zavrsni1500.itshop.dto.filter.ProductFilter;
 import hr.fer.zavrsni1500.itshop.repository.ProductRepository;
+import hr.fer.zavrsni1500.itshop.repository.specification.ProductSpecification;
 import hr.fer.zavrsni1500.itshop.service.ProductService;
 import hr.fer.zavrsni1500.itshop.util.mapper.ProductMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,8 +27,9 @@ public class ProductServiceImpl implements ProductService {
         return productMapper.productToProductDto(product);
     }
 
-    public List<ProductDto> getAllProducts() {
-        final List<Product> products = productRepository.findAll();
+    public List<ProductDto> getAllProducts(final ProductFilter filter) {
+        final ProductSpecification<Product> specification = new ProductSpecification<>(filter);
+        final List<Product> products = productRepository.findAll(specification);
         return productMapper.productsToProductDtos(products);
     }
 

@@ -1,6 +1,7 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.PCPartDto;
+import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
 import hr.fer.zavrsni1500.itshop.service.PCPartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,8 +24,8 @@ public class PCPartController {
     }
 
     @GetMapping("/all")
-    public List<PCPartDto> getAllPCParts() {
-        return pcPartService.getAllPCParts();
+    public List<PCPartDto> getAllPCParts(final PCPartFilter filter) {
+        return pcPartService.getAllPCParts(filter);
     }
 
     @PostMapping()

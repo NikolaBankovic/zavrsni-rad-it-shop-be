@@ -1,6 +1,7 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
+import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
 import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,8 +24,8 @@ public class SoftwareController {
     }
 
     @GetMapping("/all")
-    public List<SoftwareDto> getAllSoftwares() {
-        return softwareService.getAllSoftwares();
+    public List<SoftwareDto> getAllSoftwares(final SoftwareFilter filter) {
+        return softwareService.getAllSoftwares(filter);
     }
 
     @PostMapping()

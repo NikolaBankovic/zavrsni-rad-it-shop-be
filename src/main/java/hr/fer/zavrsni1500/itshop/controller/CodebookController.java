@@ -3,7 +3,6 @@ package hr.fer.zavrsni1500.itshop.controller;
 import hr.fer.zavrsni1500.itshop.dto.CategoryDto;
 import hr.fer.zavrsni1500.itshop.model.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/codebook")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
 public class CodebookController {
 
     @GetMapping("/product-type")

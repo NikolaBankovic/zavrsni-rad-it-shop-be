@@ -39,7 +39,7 @@ public class WebSecurityConfiguration {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**", "/api/codebook/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
                 .anyRequest().authenticated());
 

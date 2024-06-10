@@ -2,7 +2,9 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.PeripheralDto;
 import hr.fer.zavrsni1500.itshop.model.Peripheral;
+import hr.fer.zavrsni1500.itshop.dto.filter.PeripheralFilter;
 import hr.fer.zavrsni1500.itshop.repository.PeripheralRepository;
+import hr.fer.zavrsni1500.itshop.repository.specification.PeripheralSpecification;
 import hr.fer.zavrsni1500.itshop.service.PeripheralService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PeripheralMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,8 +28,9 @@ public class PeripheralServiceImpl implements PeripheralService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id))));
     }
 
-    public List<PeripheralDto> getAllPeripherals() {
-        return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll());
+    public List<PeripheralDto> getAllPeripherals(final PeripheralFilter filter) {
+        final PeripheralSpecification specification = new PeripheralSpecification(filter);
+        return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll(specification));
     }
 
     public PeripheralDto createPeripheral(final PeripheralDto peripheralDto, final MultipartFile image) throws IOException {
