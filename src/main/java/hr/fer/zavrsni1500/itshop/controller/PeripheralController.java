@@ -1,6 +1,7 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.PeripheralDto;
+import hr.fer.zavrsni1500.itshop.dto.filter.PeripheralFilter;
 import hr.fer.zavrsni1500.itshop.service.PeripheralService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,8 +24,8 @@ public class PeripheralController {
     }
 
     @GetMapping("/all")
-    public List<PeripheralDto> getAllPeripherals() {
-        return peripheralService.getAllPeripherals();
+    public List<PeripheralDto> getAllPeripherals(final PeripheralFilter filter) {
+        return peripheralService.getAllPeripherals(filter);
     }
 
     @PostMapping()

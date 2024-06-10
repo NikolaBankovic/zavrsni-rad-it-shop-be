@@ -2,7 +2,9 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.PCPartDto;
 import hr.fer.zavrsni1500.itshop.model.PCPart;
+import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
 import hr.fer.zavrsni1500.itshop.repository.PCPartRepository;
+import hr.fer.zavrsni1500.itshop.repository.specification.PCPartSpecification;
 import hr.fer.zavrsni1500.itshop.service.PCPartService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PCPartMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,8 +27,9 @@ public class PCPartServiceImpl implements PCPartService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id))));
     }
 
-    public List<PCPartDto> getAllPCParts() {
-        return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findAll());
+    public List<PCPartDto> getAllPCParts(final PCPartFilter filter) {
+        final PCPartSpecification specification = new PCPartSpecification(filter);
+        return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findAll(specification));
     }
 
     public PCPartDto createPCPart(final PCPartDto pcPartDto, final MultipartFile image) throws IOException {

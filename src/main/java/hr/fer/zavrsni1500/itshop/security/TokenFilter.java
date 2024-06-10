@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -25,9 +26,9 @@ public class TokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            final HttpServletRequest request,
-            final HttpServletResponse response,
-            final FilterChain filterChain
+            @NonNull final HttpServletRequest request,
+            @NonNull final HttpServletResponse response,
+            @NonNull final FilterChain filterChain
     ) throws ServletException, IOException {
 
         final String token = parseToken(request);

@@ -1,6 +1,7 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
+import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
 import hr.fer.zavrsni1500.itshop.service.PCService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,8 +24,8 @@ public class PCController {
     }
 
     @GetMapping("/all")
-    public List<PCDto> getAllPCs() {
-        return pcService.getAllPCs();
+    public List<PCDto> getAllPCs(final PCFilter filter) {
+        return pcService.getAllPCs(filter);
     }
 
     @PostMapping()

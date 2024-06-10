@@ -2,7 +2,9 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
 import hr.fer.zavrsni1500.itshop.model.Software;
+import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
 import hr.fer.zavrsni1500.itshop.repository.SoftwareRepository;
+import hr.fer.zavrsni1500.itshop.repository.specification.SoftwareSpecification;
 import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import hr.fer.zavrsni1500.itshop.util.mapper.SoftwareMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,8 +28,9 @@ public class SoftwareServiceImpl implements SoftwareService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id))));
     }
 
-    public List<SoftwareDto> getAllSoftwares() {
-        return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findAll());
+    public List<SoftwareDto> getAllSoftwares(final SoftwareFilter filter) {
+        final SoftwareSpecification specification = new SoftwareSpecification(filter);
+        return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findAll(specification));
     }
 
     public SoftwareDto createSoftware(final SoftwareDto softwareDto, final MultipartFile image) throws IOException {
