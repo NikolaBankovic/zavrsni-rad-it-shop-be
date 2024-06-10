@@ -38,4 +38,8 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Product with ID(%d) not found!", id)));
         productRepository.delete(product);
     }
+
+    public void incrementTimesVisitedForProduct(final Long id) {
+        productRepository.incrementTimesVisited(id);
+    }
 }

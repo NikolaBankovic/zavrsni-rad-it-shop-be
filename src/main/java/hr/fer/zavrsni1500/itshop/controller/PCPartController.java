@@ -28,6 +28,11 @@ public class PCPartController {
         return pcPartService.getAllPCParts(filter);
     }
 
+    @GetMapping("/top")
+    public List<PCPartDto> get5MostVisited() {
+        return pcPartService.get5MostVisited();
+    }
+
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public PCPartDto createPCPart(@RequestPart("pcPartDto") final PCPartDto pcPartDto,

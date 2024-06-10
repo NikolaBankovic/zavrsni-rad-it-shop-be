@@ -14,4 +14,5 @@ public interface PCService {
     PCDto createPC(PCDto pcDto, MultipartFile image) throws IOException;
     PCDto updatePC(Long id, PCDto pcDto, MultipartFile image) throws IOException;
     void deletePC(Long id);
+    List<PCDto> get5MostVisited();
 }

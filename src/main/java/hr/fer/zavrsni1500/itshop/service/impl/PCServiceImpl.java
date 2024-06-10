@@ -57,4 +57,8 @@ public class PCServiceImpl implements PCService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC with ID(%d) not found!", id)));
         pcRepository.delete(pc);
     }
+
+    public List<PCDto> get5MostVisited() {
+        return pcMapper.pcsToPcDtos(pcRepository.findTop5ByTimesVisited());
+    }
 }

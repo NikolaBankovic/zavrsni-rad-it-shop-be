@@ -56,4 +56,8 @@ public class PCPartServiceImpl implements PCPartService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id)));
         pcPartRepository.delete(pcPart);
     }
+
+    public List<PCPartDto> get5MostVisited() {
+        return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findTop5ByTimesVisited());
+    }
 }

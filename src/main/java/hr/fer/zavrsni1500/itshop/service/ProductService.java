@@ -10,4 +10,5 @@ public interface ProductService {
     ProductDto getProductById(Long id);
     List<ProductDto> getAllProducts(ProductFilter filter);
     void deleteProduct(Long id);
+    void incrementTimesVisitedForProduct(Long id);
 }

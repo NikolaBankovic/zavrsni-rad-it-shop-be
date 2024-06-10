@@ -57,4 +57,8 @@ public class SoftwareServiceImpl implements SoftwareService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
         softwareRepository.delete(software);
     }
+
+    public List<SoftwareDto> get5MostVisited() {
+        return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findTop5ByTimesVisited());
+    }
 }
