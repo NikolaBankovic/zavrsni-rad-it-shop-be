@@ -41,6 +41,12 @@ public class WebSecurityConfiguration {
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/api/auth/**", "/api/codebook/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
+                .requestMatchers(HttpMethod.GET,
+                        "/api/pc/**",
+                        "/api/pc-part/**",
+                        "/api/peripheral/**",
+                        "/api/software/**"
+                ).permitAll()
                 .anyRequest().authenticated());
 
         http.exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(authEntryPoint));

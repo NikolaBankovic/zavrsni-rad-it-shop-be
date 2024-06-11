@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {OrderItemMapper.class, UserMapper.class})
 public interface OrderMapper {
     List<Order> orderDtosToOrders(List<OrderDto> orderDtos);
     List<OrderDto> ordersToOrderDtos(List<Order> orders);

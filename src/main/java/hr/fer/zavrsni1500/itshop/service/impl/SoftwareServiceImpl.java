@@ -44,7 +44,8 @@ public class SoftwareServiceImpl implements SoftwareService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
 
         final Software updatedSoftware = softwareMapper.softwareDtoToSoftware(softwareDto);
-        if(!image.isEmpty()) {
+        updatedSoftware.setImage(software.getImage());
+        if(image != null && !image.isEmpty()) {
             updatedSoftware.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         }
         updatedSoftware.setId(software.getId());

@@ -43,12 +43,13 @@ public class PCPartServiceImpl implements PCPartService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id)));
 
         final PCPart updatePCPart = pcPartMapper.pcPartDtoToPCPart(pcPartDto);
-        if(!image.isEmpty()) {
+        updatePCPart.setImage(pcPart.getImage());
+        if(image != null && !image.isEmpty()) {
             updatePCPart.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         }
         updatePCPart.setId(pcPart.getId());
 
-        return pcPartMapper.pcPartToPCPartDto(pcPartRepository.save(pcPart));
+        return pcPartMapper.pcPartToPCPartDto(pcPartRepository.save(updatePCPart));
     }
 
     public void deletePCPart(final Long id) {

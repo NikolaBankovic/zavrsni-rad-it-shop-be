@@ -46,7 +46,8 @@ public class PeripheralServiceImpl implements PeripheralService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
 
         final Peripheral updatePeripheral = peripheralMapper.peripheralDtoToPeripheral(updatePeripheralDto);
-        if(!image.isEmpty()) {
+        updatePeripheral.setImage(peripheral.getImage());
+        if(image != null && !image.isEmpty()) {
             updatePeripheral.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         }
         updatePeripheral.setId(peripheral.getId());

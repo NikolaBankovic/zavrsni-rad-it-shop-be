@@ -33,7 +33,6 @@ public class OrderController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
     public List<OrderDto> getOrdersForCurrentUser() {
         final User user = currentUserService.getCurrentUser();
         return orderService.getOrdersByUserId(user.getId());
@@ -57,6 +56,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteOrder(@PathVariable final Long orderId) {
         orderService.deleteOrder(orderId);
     }
