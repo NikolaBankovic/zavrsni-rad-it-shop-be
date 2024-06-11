@@ -13,4 +13,5 @@ public interface PeripheralService {
     PeripheralDto createPeripheral(PeripheralDto peripheralDto, MultipartFile image) throws IOException;
     PeripheralDto updatePeripheral(Long id, PeripheralDto peripheralDto, MultipartFile image) throws IOException;
     void deletePeripheral(Long id);
+    List<PeripheralDto> get5MostVisited();
 }

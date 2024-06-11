@@ -28,6 +28,11 @@ public class PCController {
         return pcService.getAllPCs(filter);
     }
 
+    @GetMapping("/top")
+    public List<PCDto> get5MostVisited() {
+        return pcService.get5MostVisited();
+    }
+
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public PCDto createPC(@RequestPart("pcDto") final PCDto pcDto,
@@ -49,4 +54,6 @@ public class PCController {
     public void deletePC(@PathVariable final Long id) {
         pcService.deletePC(id);
     }
+
+
 }

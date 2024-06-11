@@ -9,6 +9,7 @@ public record ProductDto(
         double price,
         String description,
         String image,
+        long timesVisited,
         PCType pcType,
         PCPartType pcPartType,
         PeripheralType peripheralType,

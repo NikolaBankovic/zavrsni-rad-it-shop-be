@@ -28,6 +28,11 @@ public class SoftwareController {
         return softwareService.getAllSoftwares(filter);
     }
 
+    @GetMapping("/top")
+    public List<SoftwareDto> get5MostVisited() {
+        return softwareService.get5MostVisited();
+    }
+
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public SoftwareDto createSoftware(@RequestPart("softwareDto") final SoftwareDto softwareDto,

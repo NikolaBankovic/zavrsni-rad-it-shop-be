@@ -23,4 +23,6 @@ public class Product {
     private String description;
 
     private String image;
+
+    private Long timesVisited = 0L;
 }

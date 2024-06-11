@@ -13,4 +13,5 @@ public interface PCPartService {
     PCPartDto createPCPart(PCPartDto pcPartDto, MultipartFile image) throws IOException;
     PCPartDto updatePCPart(Long id, PCPartDto pcPartDto, MultipartFile image) throws IOException;
     void deletePCPart(Long id);
+    List<PCPartDto> get5MostVisited();
 }

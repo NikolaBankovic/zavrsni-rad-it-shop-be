@@ -28,6 +28,11 @@ public class PeripheralController {
         return peripheralService.getAllPeripherals(filter);
     }
 
+    @GetMapping("/top")
+    public List<PeripheralDto> get5MostVisited() {
+        return peripheralService.get5MostVisited();
+    }
+
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public PeripheralDto createPeripheral(

@@ -32,4 +32,9 @@ public class ProductController {
     public void deleteProduct(@PathVariable final Long id) {
         productService.deleteProduct(id);
     }
+
+    @PatchMapping("/{id}")
+    public void incrementTimesVisitedForProduct(@PathVariable final Long id) {
+        productService.incrementTimesVisitedForProduct(id);
+    }
 }

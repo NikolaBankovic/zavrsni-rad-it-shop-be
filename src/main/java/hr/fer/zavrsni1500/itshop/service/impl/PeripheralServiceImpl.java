@@ -59,4 +59,8 @@ public class PeripheralServiceImpl implements PeripheralService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id)));
         peripheralRepository.delete(peripheral);
     }
+
+    public List<PeripheralDto> get5MostVisited() {
+        return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findTop5ByTimesVisited());
+    }
 }

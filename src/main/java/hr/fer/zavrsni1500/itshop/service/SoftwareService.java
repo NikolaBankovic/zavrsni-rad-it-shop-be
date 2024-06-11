@@ -13,4 +13,5 @@ public interface SoftwareService {
     SoftwareDto getSoftwareById(Long id);
     List<SoftwareDto> getAllSoftwares(SoftwareFilter filter);
     void deleteSoftware(Long id);
+    List<SoftwareDto> get5MostVisited();
 }
