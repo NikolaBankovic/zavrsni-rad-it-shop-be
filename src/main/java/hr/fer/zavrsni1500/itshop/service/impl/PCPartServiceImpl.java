@@ -1,5 +1,6 @@
 package hr.fer.zavrsni1500.itshop.service.impl;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCPartDto;
 import hr.fer.zavrsni1500.itshop.model.PCPart;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
@@ -9,6 +10,7 @@ import hr.fer.zavrsni1500.itshop.service.PCPartService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PCPartMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,9 +29,14 @@ public class PCPartServiceImpl implements PCPartService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC part with ID(%d) not found!", id))));
     }
 
-    public List<PCPartDto> getAllPCParts(final PCPartFilter filter) {
+    public List<PCPartDto> getAllPCParts(final Pageable pageable, final PCPartFilter filter) {
         final PCPartSpecification specification = new PCPartSpecification(filter);
-        return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findAll(specification));
+        return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findAll(specification, pageable));
+    }
+
+    public CountDto getAllPCPartCount(final PCPartFilter filter) {
+        final PCPartSpecification specification = new PCPartSpecification(filter);
+        return new CountDto(pcPartRepository.count(specification));
     }
 
     public PCPartDto createPCPart(final PCPartDto pcPartDto, final MultipartFile image) throws IOException {
