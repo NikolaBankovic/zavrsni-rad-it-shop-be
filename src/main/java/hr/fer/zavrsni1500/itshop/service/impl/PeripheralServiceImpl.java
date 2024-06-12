@@ -1,5 +1,6 @@
 package hr.fer.zavrsni1500.itshop.service.impl;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PeripheralDto;
 import hr.fer.zavrsni1500.itshop.model.Peripheral;
 import hr.fer.zavrsni1500.itshop.dto.filter.PeripheralFilter;
@@ -9,6 +10,7 @@ import hr.fer.zavrsni1500.itshop.service.PeripheralService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PeripheralMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,9 +30,14 @@ public class PeripheralServiceImpl implements PeripheralService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral with ID(%d) not found!", id))));
     }
 
-    public List<PeripheralDto> getAllPeripherals(final PeripheralFilter filter) {
+    public List<PeripheralDto> getAllPeripherals(final Pageable pageable, final PeripheralFilter filter) {
         final PeripheralSpecification specification = new PeripheralSpecification(filter);
-        return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll(specification));
+        return peripheralMapper.peripheralsToPeripheralDtos(peripheralRepository.findAll(specification, pageable));
+    }
+
+    public CountDto getAllPeripheralCount(final PeripheralFilter filter) {
+        final PeripheralSpecification specification = new PeripheralSpecification(filter);
+        return new CountDto(peripheralRepository.count(specification));
     }
 
     public PeripheralDto createPeripheral(final PeripheralDto peripheralDto, final MultipartFile image) throws IOException {

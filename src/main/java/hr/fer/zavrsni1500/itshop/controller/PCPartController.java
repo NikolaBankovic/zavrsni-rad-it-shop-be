@@ -1,9 +1,11 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCPartDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
 import hr.fer.zavrsni1500.itshop.service.PCPartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +26,13 @@ public class PCPartController {
     }
 
     @GetMapping("/all")
-    public List<PCPartDto> getAllPCParts(final PCPartFilter filter) {
-        return pcPartService.getAllPCParts(filter);
+    public List<PCPartDto> getAllPCParts(final Pageable pageable, final PCPartFilter filter) {
+        return pcPartService.getAllPCParts(pageable, filter);
+    }
+
+    @GetMapping("/all/count")
+    public CountDto getAllPCPartCount(final PCPartFilter filter) {
+        return pcPartService.getAllPCPartCount(filter);
     }
 
     @GetMapping("/top")

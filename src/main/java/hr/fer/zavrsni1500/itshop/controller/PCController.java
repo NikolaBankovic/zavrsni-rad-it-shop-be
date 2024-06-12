@@ -1,9 +1,11 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
 import hr.fer.zavrsni1500.itshop.service.PCService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +26,13 @@ public class PCController {
     }
 
     @GetMapping("/all")
-    public List<PCDto> getAllPCs(final PCFilter filter) {
-        return pcService.getAllPCs(filter);
+    public List<PCDto> getAllPCs(final Pageable pageable, final PCFilter filter) {
+        return pcService.getAllPCs(pageable, filter);
+    }
+
+    @GetMapping("/all/count")
+    public CountDto getAllPCCount(final PCFilter filter) {
+        return pcService.getAllPCCount(filter);
     }
 
     @GetMapping("/top")
