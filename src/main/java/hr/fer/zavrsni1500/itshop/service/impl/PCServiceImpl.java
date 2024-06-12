@@ -44,7 +44,8 @@ public class PCServiceImpl implements PCService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("PC with ID(%d) not found!", id)));
 
         final PC updatePC = pcMapper.pcDtoToPc(updatePCdto);
-        if(!image.isEmpty()) {
+        updatePC.setImage(pc.getImage());
+        if(image != null && !image.isEmpty()) {
             updatePC.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         }
         updatePC.setId(pc.getId());
