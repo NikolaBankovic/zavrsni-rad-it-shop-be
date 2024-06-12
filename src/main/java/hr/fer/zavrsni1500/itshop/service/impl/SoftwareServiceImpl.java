@@ -1,5 +1,6 @@
 package hr.fer.zavrsni1500.itshop.service.impl;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
 import hr.fer.zavrsni1500.itshop.model.Software;
 import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
@@ -9,6 +10,7 @@ import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import hr.fer.zavrsni1500.itshop.util.mapper.SoftwareMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,9 +30,14 @@ public class SoftwareServiceImpl implements SoftwareService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id))));
     }
 
-    public List<SoftwareDto> getAllSoftwares(final SoftwareFilter filter) {
+    public List<SoftwareDto> getAllSoftware(final Pageable pageable, final SoftwareFilter filter) {
         final SoftwareSpecification specification = new SoftwareSpecification(filter);
-        return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findAll(specification));
+        return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findAll(specification, pageable));
+    }
+
+    public CountDto getAllSoftwareCount(final SoftwareFilter filter) {
+        final SoftwareSpecification specification = new SoftwareSpecification(filter);
+        return new CountDto(softwareRepository.count(specification));
     }
 
     public SoftwareDto createSoftware(final SoftwareDto softwareDto, final MultipartFile image) throws IOException {
@@ -44,7 +51,8 @@ public class SoftwareServiceImpl implements SoftwareService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
 
         final Software updatedSoftware = softwareMapper.softwareDtoToSoftware(softwareDto);
-        if(!image.isEmpty()) {
+        updatedSoftware.setImage(software.getImage());
+        if(image != null && !image.isEmpty()) {
             updatedSoftware.setImage(Base64.getEncoder().encodeToString(image.getBytes()));
         }
         updatedSoftware.setId(software.getId());
@@ -56,5 +64,9 @@ public class SoftwareServiceImpl implements SoftwareService {
         final Software software = softwareRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Software with ID(%d) not found!", id)));
         softwareRepository.delete(software);
+    }
+
+    public List<SoftwareDto> get5MostVisited() {
+        return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findTop5ByTimesVisited());
     }
 }

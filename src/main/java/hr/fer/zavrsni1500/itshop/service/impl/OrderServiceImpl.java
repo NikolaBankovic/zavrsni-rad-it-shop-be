@@ -49,10 +49,13 @@ public class OrderServiceImpl implements OrderService {
         final Cart cart = cartRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new EmptyCartException("Cart is empty"));
 
-        final List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.getCartItemList());
-        orderItems.forEach(orderItem -> orderItem.setPrice(orderItem.getProduct().getPrice()));
-
         final Order order = new Order();
+        final List<OrderItem> orderItems = orderItemMapper.cartItemsToOrderItems(cart.getCartItemList());
+        orderItems.forEach(orderItem -> {
+            orderItem.setOrder(order);
+            orderItem.setPrice(orderItem.getProduct().getPrice());
+        });
+
         order.setUser(user);
         order.setOrderItemsList(orderItems);
         order.setTotalAmount();
@@ -66,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
         final Order order = orderRepository.findById(orderDto.id()).orElseThrow(() ->
                 new EntityNotFoundException(String.format("Order with ID(%d) doesn't exist.", orderDto.id())));
         order.setUser(userMapper.userDtoToUser(orderDto.user()));
-        order.setOrderItemsList(orderItemMapper.orderItemDtosToOrderItems(orderDto.orderItems()));
+        order.setOrderItemsList(orderItemMapper.orderItemDtosToOrderItems(orderDto.orderItemsList()));
         return orderMapper.orderToOrderDto(orderRepository.save(order));
     }
 

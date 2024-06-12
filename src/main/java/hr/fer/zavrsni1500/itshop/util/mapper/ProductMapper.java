@@ -12,21 +12,22 @@ public interface ProductMapper {
     default ProductDto productToProductDto(final Product product) {
         return switch (product) {
             case final PC pc -> new ProductDto(
-                    pc.getId().intValue(),  // assuming id in ProductDto is int
+                    pc.getId().intValue(),
                     ProductType.PC,
                     pc.getName(),
                     pc.getPrice(),
                     pc.getDescription(),
                     pc.getImage(),
+                    pc.getTimesVisited(),
                     pc.getPcType(),
-                    null,   // PCPartType
-                    null,   // PeripheralType
-                    null,   // SoftwareType
-                    null,   // UsedState
-                    null,   // warrantyLength
-                    null,   // manufacturerName
-                    null,   // manufacturerCatalogueNumber
-                    null    // linkToPartOnManufacturerWebsite
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
             );
             case final PCPart pcPart -> new ProductDto(
                     pcPart.getId().intValue(),
@@ -35,10 +36,11 @@ public interface ProductMapper {
                     pcPart.getPrice(),
                     pcPart.getDescription(),
                     pcPart.getImage(),
-                    null,   // PCType
+                    pcPart.getTimesVisited(),
+                    null,
                     pcPart.getPcPartType(),
-                    null,   // PeripheralType
-                    null,   // SoftwareType
+                    null,
+                    null,
                     pcPart.getUsedState(),
                     pcPart.getWarrantyLength() != null ? pcPart.getWarrantyLength().intValue() : null,
                     pcPart.getManufacturerName(),
@@ -52,15 +54,16 @@ public interface ProductMapper {
                     peripheral.getPrice(),
                     peripheral.getDescription(),
                     peripheral.getImage(),
-                    null,   // PCType
-                    null,   // PCPartType
+                    peripheral.getTimesVisited(),
+                    null,
+                    null,
                     peripheral.getPeripheralType(),
-                    null,   // SoftwareType
-                    null,   // UsedState
-                    null,   // warrantyLength
-                    null,   // manufacturerName
-                    null,   // manufacturerCatalogueNumber
-                    null    // linkToPartOnManufacturerWebsite
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
             );
             case final Software software -> new ProductDto(
                     software.getId().intValue(),
@@ -69,18 +72,18 @@ public interface ProductMapper {
                     software.getPrice(),
                     software.getDescription(),
                     software.getImage(),
-                    null,   // PCType
-                    null,   // PCPartType
-                    null,   // PeripheralType
+                    software.getTimesVisited(),
+                    null,
+                    null,
+                    null,
                     software.getSoftwareType(),
-                    null,   // UsedState
-                    null,   // warrantyLength
-                    null,   // manufacturerName
-                    null,   // manufacturerCatalogueNumber
-                    null    // linkToPartOnManufacturerWebsite
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
             );
             case null, default ->
-                // Handle unknown product types or base Product class
                     new ProductDto(
                             product.getId().intValue(),
                             null,
@@ -88,15 +91,16 @@ public interface ProductMapper {
                             product.getPrice(),
                             product.getDescription(),
                             product.getImage(),
-                            null,   // PCType
-                            null,   // PCPartType
-                            null,   // PeripheralType
-                            null,   // SoftwareType
-                            null,   // UsedState
-                            null,   // warrantyLength
-                            null,   // manufacturerName
-                            null,   // manufacturerCatalogueNumber
-                            null    // linkToPartOnManufacturerWebsite
+                            product.getTimesVisited(),
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
                     );
         };
     }

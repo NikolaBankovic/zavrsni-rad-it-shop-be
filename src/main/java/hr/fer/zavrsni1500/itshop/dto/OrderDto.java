@@ -5,7 +5,7 @@ import java.util.List;
 public record OrderDto(
         Long id,
         UserDto user,
-        List<OrderItemDto> orderItems,
+        List<OrderItemDto> orderItemsList,
         double totalPrice
 ) {
 }

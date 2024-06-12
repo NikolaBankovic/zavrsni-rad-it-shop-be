@@ -1,9 +1,11 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
 import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +26,18 @@ public class SoftwareController {
     }
 
     @GetMapping("/all")
-    public List<SoftwareDto> getAllSoftwares(final SoftwareFilter filter) {
-        return softwareService.getAllSoftwares(filter);
+    public List<SoftwareDto> getAllSoftware(final Pageable pageable, final SoftwareFilter filter) {
+        return softwareService.getAllSoftware(pageable, filter);
+    }
+
+    @GetMapping("/all/count")
+    public CountDto getAllSoftwareCount(final SoftwareFilter filter) {
+        return softwareService.getAllSoftwareCount(filter);
+    }
+
+    @GetMapping("/top")
+    public List<SoftwareDto> get5MostVisited() {
+        return softwareService.get5MostVisited();
     }
 
     @PostMapping()

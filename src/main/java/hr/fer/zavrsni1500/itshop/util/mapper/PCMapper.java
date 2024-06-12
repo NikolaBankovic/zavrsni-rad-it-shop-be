@@ -3,6 +3,7 @@ package hr.fer.zavrsni1500.itshop.util.mapper;
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
 import hr.fer.zavrsni1500.itshop.model.PC;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,5 +12,6 @@ public interface PCMapper {
     PCDto pcToPcDto(PC pc);
     PC pcDtoToPc(PCDto pcDto);
     List<PCDto> pcsToPcDtos(List<PC> pcs);
+    List<PCDto> pcsToPcDtos(Page<PC> pcs);
     List<PC> pcDtosToPcs(List<PCDto> pcDtos);
 }

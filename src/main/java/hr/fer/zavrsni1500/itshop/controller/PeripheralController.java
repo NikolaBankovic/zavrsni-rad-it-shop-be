@@ -1,9 +1,11 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
+import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PeripheralDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PeripheralFilter;
 import hr.fer.zavrsni1500.itshop.service.PeripheralService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +26,18 @@ public class PeripheralController {
     }
 
     @GetMapping("/all")
-    public List<PeripheralDto> getAllPeripherals(final PeripheralFilter filter) {
-        return peripheralService.getAllPeripherals(filter);
+    public List<PeripheralDto> getAllPeripherals(final Pageable pageable, final PeripheralFilter filter) {
+        return peripheralService.getAllPeripherals(pageable, filter);
+    }
+
+    @GetMapping("/all/count")
+    public CountDto getAllPeripheralCount(final PeripheralFilter filter) {
+        return peripheralService.getAllPeripheralCount(filter);
+    }
+
+    @GetMapping("/top")
+    public List<PeripheralDto> get5MostVisited() {
+        return peripheralService.get5MostVisited();
     }
 
     @PostMapping()
