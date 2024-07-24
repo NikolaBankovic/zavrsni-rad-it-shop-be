@@ -1,7 +1,12 @@
 package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.CategoryDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.model.*;
+import hr.fer.zavrsni1500.itshop.service.PCPartService;
+import hr.fer.zavrsni1500.itshop.service.PCService;
+import hr.fer.zavrsni1500.itshop.service.PeripheralService;
+import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,29 +20,34 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodebookController {
 
+    private final PCService pcService;
+    private final PCPartService pcPartService;
+    private final PeripheralService peripheralService;
+    private final SoftwareService softwareService;
+
     @GetMapping("/product-type")
     public List<String> productType() {
         return ProductType.getAllProductTypes();
     }
 
     @GetMapping("/pc-type")
-    public List<String> pcType() {
-        return Arrays.stream(PCType.values()).map(PCType::toString).toList();
+    public List<TypeDto> pcType() {
+        return pcService.getPCTypes();
     }
 
     @GetMapping("/pc-part-type")
-    public List<String> pcPartType() {
-        return Arrays.stream(PCPartType.values()).map(PCPartType::toString).toList();
+    public List<TypeDto> pcPartType() {
+        return pcPartService.getPCPartTypes();
     }
 
     @GetMapping("/peripheral-type")
-    public List<String> peripheralType() {
-        return Arrays.stream(PeripheralType.values()).map(PeripheralType::toString).toList();
+    public List<TypeDto> peripheralType() {
+        return peripheralService.getPeripheralTypes();
     }
 
     @GetMapping("/software-type")
-    public List<String> softwareType() {
-        return Arrays.stream(SoftwareType.values()).map(SoftwareType::toString).toList();
+    public List<TypeDto> softwareType() {
+        return softwareService.getSoftwareTypes();
     }
 
     @GetMapping("/used-state")
@@ -50,10 +60,10 @@ public class CodebookController {
         return ProductType.getAllProductTypes().stream()
                 .map(productType ->
                     switch (productType) {
-                        case ProductType.PC -> new CategoryDto(productType, pcType());
-                        case ProductType.PC_PART -> new CategoryDto(productType, pcPartType());
-                        case ProductType.PERIPHERAL -> new CategoryDto(productType, peripheralType());
-                        case ProductType.SOFTWARE -> new CategoryDto(productType, softwareType());
+                        case ProductType.PC -> new CategoryDto(productType, pcType().stream().map(TypeDto::typeName).toList());
+                        case ProductType.PC_PART -> new CategoryDto(productType, pcPartType().stream().map(TypeDto::typeName).toList());
+                        case ProductType.PERIPHERAL -> new CategoryDto(productType, peripheralType().stream().map(TypeDto::typeName).toList());
+                        case ProductType.SOFTWARE -> new CategoryDto(productType, softwareType().stream().map(TypeDto::typeName).toList());
                         default -> throw new IllegalStateException("Unexpected value: " + productType);
                     })
                 .toList();

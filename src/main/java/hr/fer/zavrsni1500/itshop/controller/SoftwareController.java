@@ -2,6 +2,7 @@ package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
 import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import lombok.RequiredArgsConstructor;
@@ -59,5 +60,11 @@ public class SoftwareController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteSoftware(@PathVariable final Long id) {
         softwareService.deleteSoftware(id);
+    }
+
+    @PostMapping("/type")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public TypeDto createType(@RequestBody final TypeDto typeDto) {
+        return softwareService.createSoftwareType(typeDto);
     }
 }

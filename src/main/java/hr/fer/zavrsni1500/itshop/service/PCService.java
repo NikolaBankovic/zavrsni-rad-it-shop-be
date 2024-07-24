@@ -2,6 +2,7 @@ package hr.fer.zavrsni1500.itshop.service;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,4 +19,6 @@ public interface PCService {
     PCDto updatePC(Long id, PCDto pcDto, MultipartFile image) throws IOException;
     void deletePC(Long id);
     List<PCDto> get5MostVisited();
+    List<TypeDto> getPCTypes();
+    TypeDto createPCType(TypeDto pcTypeDto);
 }

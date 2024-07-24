@@ -2,12 +2,16 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCPartDto;
-import hr.fer.zavrsni1500.itshop.model.PCPart;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
+import hr.fer.zavrsni1500.itshop.model.PCPart;
+import hr.fer.zavrsni1500.itshop.model.PCPartType;
 import hr.fer.zavrsni1500.itshop.repository.PCPartRepository;
+import hr.fer.zavrsni1500.itshop.repository.PCPartTypeRepository;
 import hr.fer.zavrsni1500.itshop.repository.specification.PCPartSpecification;
 import hr.fer.zavrsni1500.itshop.service.PCPartService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PCPartMapper;
+import hr.fer.zavrsni1500.itshop.util.mapper.TypeMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +26,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PCPartServiceImpl implements PCPartService {
     private final PCPartRepository pcPartRepository;
+    private final PCPartTypeRepository pcPartTypeRepository;
     private final PCPartMapper pcPartMapper;
+    private final TypeMapper typeMapper;
 
     public PCPartDto getPCPartById(final Long id) {
         return pcPartMapper.pcPartToPCPartDto(pcPartRepository.findById(id)
@@ -68,4 +74,17 @@ public class PCPartServiceImpl implements PCPartService {
     public List<PCPartDto> get5MostVisited() {
         return pcPartMapper.pcPartsToPCPartDtos(pcPartRepository.findTop5ByTimesVisited());
     }
+
+    public List<TypeDto> getPCPartTypes() {
+        final List<PCPartType> pcPartTypes = pcPartTypeRepository.findAll();
+
+        return typeMapper.pcPartTypeListToTypeDtoList(pcPartTypes);
+    }
+
+    public TypeDto createPCPartType(final TypeDto pcPartTypeDto) {
+        final PCPartType pcPartType = typeMapper.typeDtoToPCPartType(pcPartTypeDto);
+
+        return  typeMapper.pcPartTypeToTypeDto(pcPartTypeRepository.save(pcPartType));
+    }
+
 }

@@ -2,12 +2,16 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.model.Software;
 import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
+import hr.fer.zavrsni1500.itshop.model.SoftwareType;
 import hr.fer.zavrsni1500.itshop.repository.SoftwareRepository;
+import hr.fer.zavrsni1500.itshop.repository.SoftwareTypeRepository;
 import hr.fer.zavrsni1500.itshop.repository.specification.SoftwareSpecification;
 import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import hr.fer.zavrsni1500.itshop.util.mapper.SoftwareMapper;
+import hr.fer.zavrsni1500.itshop.util.mapper.TypeMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +27,9 @@ import java.util.List;
 public class SoftwareServiceImpl implements SoftwareService {
 
     private final SoftwareRepository softwareRepository;
+    private final SoftwareTypeRepository softwareTypeRepository;
     private final SoftwareMapper softwareMapper;
+    private final TypeMapper typeMapper;
 
     public SoftwareDto getSoftwareById(final Long id) {
         return softwareMapper.softwareToSoftwareDto(softwareRepository.findById(id)
@@ -68,5 +74,17 @@ public class SoftwareServiceImpl implements SoftwareService {
 
     public List<SoftwareDto> get5MostVisited() {
         return softwareMapper.softwaresToSoftwaresDto(softwareRepository.findTop5ByTimesVisited());
+    }
+
+    public List<TypeDto> getSoftwareTypes() {
+        final List<SoftwareType> softwareTypes = softwareTypeRepository.findAll();
+
+        return typeMapper.softwareTypeListToTypeDtoList(softwareTypes);
+    }
+
+    public TypeDto createSoftwareType(final TypeDto softwareTypeDto) {
+        final SoftwareType softwareType = typeMapper.typeDtoToSoftwareType(softwareTypeDto);
+
+        return typeMapper.softwareTypeToTypeDto(softwareTypeRepository.save(softwareType));
     }
 }

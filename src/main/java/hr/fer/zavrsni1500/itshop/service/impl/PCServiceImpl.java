@@ -2,12 +2,16 @@ package hr.fer.zavrsni1500.itshop.service.impl;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
 import hr.fer.zavrsni1500.itshop.model.PC;
+import hr.fer.zavrsni1500.itshop.model.PCType;
 import hr.fer.zavrsni1500.itshop.repository.PCRepository;
+import hr.fer.zavrsni1500.itshop.repository.PCTypeRepository;
 import hr.fer.zavrsni1500.itshop.repository.specification.PCSpecification;
 import hr.fer.zavrsni1500.itshop.service.PCService;
 import hr.fer.zavrsni1500.itshop.util.mapper.PCMapper;
+import hr.fer.zavrsni1500.itshop.util.mapper.TypeMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +27,9 @@ import java.util.List;
 public class PCServiceImpl implements PCService {
 
     private final PCRepository pcRepository;
+    private final PCTypeRepository pcTypeRepository;
     private final PCMapper pcMapper;
+    private final TypeMapper typeMapper;
 
     public PCDto getPCById(final Long id) {
         return pcMapper.pcToPcDto(pcRepository.findById(id)
@@ -68,5 +74,17 @@ public class PCServiceImpl implements PCService {
 
     public List<PCDto> get5MostVisited() {
         return pcMapper.pcsToPcDtos(pcRepository.findTop5ByTimesVisited());
+    }
+
+    public List<TypeDto> getPCTypes() {
+        final List<PCType> pcTypes = pcTypeRepository.findAll();
+
+        return typeMapper.PCTypeListToTypeDtoList(pcTypes);
+    }
+
+    public TypeDto createPCType(final TypeDto pcTypeDto) {
+        final PCType pcType = typeMapper.typeDtoToPCType(pcTypeDto);
+
+        return typeMapper.PCTypeToTypeDto(pcTypeRepository.save(pcType));
     }
 }

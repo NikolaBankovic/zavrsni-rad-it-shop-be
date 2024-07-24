@@ -2,6 +2,7 @@ package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCPartDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
 import hr.fer.zavrsni1500.itshop.service.PCPartService;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,11 @@ public class PCPartController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deletePCPart(@PathVariable final Long id) {
         pcPartService.deletePCPart(id);
+    }
+
+    @PostMapping("/type")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public TypeDto createType(@RequestBody final TypeDto typeDto) {
+        return pcPartService.createPCPartType(typeDto);
     }
 }
