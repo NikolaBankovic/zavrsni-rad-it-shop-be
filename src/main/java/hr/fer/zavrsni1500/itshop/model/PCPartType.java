@@ -1,29 +1,19 @@
 package hr.fer.zavrsni1500.itshop.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 @Getter
-public enum PCPartType {
+@Setter
+@Table(name = "pc_part_type")
+public class PCPartType {
 
-    PROCESSOR("Procesori"),
-    MOTHERBOARD("Matične ploče"),
-    GRAPHICS_CARD("Grafičke kartice"),
-    RAM("Radna memorija (RAM)"),
-    SSD("Solid state diskovi (SSD)"),
-    HDD("Tvrdi diskovi (HDD)"),
-    POWER_SUPPLY("Napajanja"),
-    CASE("Kućišta"),
-    COOLER("Cooleri"),
-    LIQUID_COOLING("Vodeno hlađenje"),
-    OPTICAL_DRIVE("Optički uređaji"),
-    FAN("Ventilatori"),
-    THERMAL_PASTE("Termalne paste"),
-    AUDIO_CARD("Zvučne kartice");
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final String partTypeName;
-
-    PCPartType(final String partTypeName) {
-        this.partTypeName = partTypeName;
-    }
+    private String typeName;
 
 }

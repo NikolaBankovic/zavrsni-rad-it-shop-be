@@ -1,17 +1,18 @@
 package hr.fer.zavrsni1500.itshop.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 @Getter
-public enum SoftwareType {
-    OS("Operacijski sustav"),
-    APPLICATION("Aplikacija"),
-    SECURITY("Sigurnost"),
-    GAME("Igra");
+@Setter
+@Table(name = "software_type")
+public class SoftwareType {
 
-    private final String softwareType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    SoftwareType(final String softwareType) {
-        this.softwareType = softwareType;
-    }
+    private String typeName;
 }

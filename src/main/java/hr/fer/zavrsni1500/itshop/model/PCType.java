@@ -1,17 +1,18 @@
 package hr.fer.zavrsni1500.itshop.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 @Getter
-public enum PCType {
-    OFFICE("Uredski"),
-    GAMING("Za igranje"),
-    WORK_STATION("Radna stanica"),
-    SERVER("Poslužitelj");
+@Setter
+@Table(name = "pc_type")
+public class PCType {
 
-    private final String pcTypeName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    PCType(final String pcTypeName) {
-        this.pcTypeName = pcTypeName;
-    }
+    private String typeName;
 }
