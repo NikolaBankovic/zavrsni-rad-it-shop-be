@@ -20,4 +20,5 @@ public interface PCPartService {
     List<PCPartDto> get5MostVisited();
     List<TypeDto> getPCPartTypes();
     TypeDto createPCPartType(TypeDto pcPartTypeDto);
+    void deletePCPartType(Long id);
 }

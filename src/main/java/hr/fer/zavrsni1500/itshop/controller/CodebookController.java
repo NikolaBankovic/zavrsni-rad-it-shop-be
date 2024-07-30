@@ -8,9 +8,8 @@ import hr.fer.zavrsni1500.itshop.service.PCService;
 import hr.fer.zavrsni1500.itshop.service.PeripheralService;
 import hr.fer.zavrsni1500.itshop.service.SoftwareService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,5 +66,53 @@ public class CodebookController {
                         default -> throw new IllegalStateException("Unexpected value: " + productType);
                     })
                 .toList();
+    }
+
+    @PostMapping("/pc-type")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public TypeDto createPCType(@RequestBody final TypeDto typeDto) {
+        return pcService.createPCType(typeDto);
+    }
+
+    @PostMapping("/pc-part-type")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public TypeDto createPCPartType(@RequestBody final TypeDto typeDto) {
+        return pcPartService.createPCPartType(typeDto);
+    }
+
+    @PostMapping("/peripheral-type")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public TypeDto createPeripheralType(@RequestBody final TypeDto typeDto) {
+        return peripheralService.createPeripheralType(typeDto);
+    }
+
+    @PostMapping("/software-type")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public TypeDto createSoftwareType(@RequestBody final TypeDto typeDto) {
+        return softwareService.createSoftwareType(typeDto);
+    }
+
+    @DeleteMapping("/pc-type/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deletePCType(@PathVariable final Long id) {
+        pcService.deletePCType(id);
+    }
+
+    @DeleteMapping("/pc-part-type/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deletePCPartType(@PathVariable final Long id) {
+        pcPartService.deletePCPartType(id);
+    }
+
+    @DeleteMapping("/peripheral-type/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deletePeripheralType(@PathVariable final Long id) {
+        peripheralService.deletePeripheralType(id);
+    }
+
+    @DeleteMapping("/software-type/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteSoftwareType(@PathVariable final Long id) {
+        softwareService.deleteSoftwareType(id);
     }
 }

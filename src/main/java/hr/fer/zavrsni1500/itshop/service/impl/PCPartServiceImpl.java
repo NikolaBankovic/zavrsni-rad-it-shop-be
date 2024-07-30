@@ -87,4 +87,10 @@ public class PCPartServiceImpl implements PCPartService {
         return  typeMapper.pcPartTypeToTypeDto(pcPartTypeRepository.save(pcPartType));
     }
 
+    public void deletePCPartType(final Long id) {
+        final PCPartType pcPartType = pcPartTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("PC part type with ID(%d) not found!", id)));
+        pcPartTypeRepository.delete(pcPartType);
+    }
+
 }

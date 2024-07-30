@@ -89,4 +89,10 @@ public class PeripheralServiceImpl implements PeripheralService {
 
         return typeMapper.peripheralTypeToTypeDto(peripheralTypeRepository.save(peripheralType));
     }
+
+    public void deletePeripheralType(final Long id) {
+        final PeripheralType peripheralType = peripheralTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Peripheral type with ID(%d) not found!", id)));
+        peripheralTypeRepository.delete(peripheralType);
+    }
 }

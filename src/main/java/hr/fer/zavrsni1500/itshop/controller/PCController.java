@@ -2,7 +2,6 @@ package hr.fer.zavrsni1500.itshop.controller;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PCDto;
-import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
 import hr.fer.zavrsni1500.itshop.service.PCService;
 import lombok.RequiredArgsConstructor;
@@ -63,9 +62,4 @@ public class PCController {
         pcService.deletePC(id);
     }
 
-    @PostMapping("/type")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public TypeDto createType(@RequestBody final TypeDto typeDto) {
-        return pcService.createPCType(typeDto);
-    }
 }

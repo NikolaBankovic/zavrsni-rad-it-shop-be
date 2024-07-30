@@ -20,4 +20,5 @@ public interface SoftwareService {
     List<SoftwareDto> get5MostVisited();
     List<TypeDto> getSoftwareTypes();
     TypeDto createSoftwareType(TypeDto softwareTypeDto);
+    void deleteSoftwareType(Long id);
 }

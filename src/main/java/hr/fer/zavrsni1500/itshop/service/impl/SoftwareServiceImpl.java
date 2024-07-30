@@ -87,4 +87,10 @@ public class SoftwareServiceImpl implements SoftwareService {
 
         return typeMapper.softwareTypeToTypeDto(softwareTypeRepository.save(softwareType));
     }
+
+    public void deleteSoftwareType(final Long id) {
+        final SoftwareType softwareType = softwareTypeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Software type with ID(%d) not found!", id)));
+        softwareTypeRepository.delete(softwareType);
+    }
 }

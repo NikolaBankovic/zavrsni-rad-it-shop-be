@@ -20,4 +20,5 @@ public interface PeripheralService {
     List<PeripheralDto> get5MostVisited();
     List<TypeDto> getPeripheralTypes();
     TypeDto createPeripheralType(TypeDto peripheralTypeDto);
+    void deletePeripheralType(Long id);
 }

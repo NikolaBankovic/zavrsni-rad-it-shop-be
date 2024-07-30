@@ -21,4 +21,5 @@ public interface PCService {
     List<PCDto> get5MostVisited();
     List<TypeDto> getPCTypes();
     TypeDto createPCType(TypeDto pcTypeDto);
+    void deletePCType(Long id);
 }
