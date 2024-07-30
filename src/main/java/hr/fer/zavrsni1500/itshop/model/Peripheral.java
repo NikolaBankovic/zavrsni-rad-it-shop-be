@@ -10,6 +10,7 @@ import lombok.Setter;
 @DiscriminatorValue(ProductType.PERIPHERAL)
 public class Peripheral extends Product{
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "peripheral_type_id")
     private PeripheralType peripheralType;
 }

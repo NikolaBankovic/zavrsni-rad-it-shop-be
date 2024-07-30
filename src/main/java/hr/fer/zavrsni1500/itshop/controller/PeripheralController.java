@@ -62,4 +62,5 @@ public class PeripheralController {
     public void deletePeripheral(@PathVariable final Long id) {
         peripheralService.deletePeripheral(id);
     }
+
 }

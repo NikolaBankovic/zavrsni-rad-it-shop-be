@@ -1,23 +1,18 @@
 package hr.fer.zavrsni1500.itshop.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 @Getter
-public enum PeripheralType {
-    KEYBOARD("Tipkovnica"),
-    MOUSE("Miš"),
-    MOUSE_MAT("Podloga za miš"),
-    SPEAKERS("Zvučnici"),
-    HEADPHONES("Slušalice"),
-    MICROPHONE("Mikrofon"),
-    WEB_CAM("Web kamera"),
-    MONITOR("Monitor"),
-    CABLE("Kabel"),
-    ADAPTER("Adapter");
+@Setter
+@Table(name = "peripheral_type")
+public class PeripheralType {
 
-    private final String peripheralType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    PeripheralType(final String peripheralType) {
-        this.peripheralType = peripheralType;
-    }
+    private String typeName;
 }
