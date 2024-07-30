@@ -41,7 +41,7 @@ public class PeripheralController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public PeripheralDto createPeripheral(
             @RequestPart("peripheralDto") final PeripheralDto peripheralDto,
             @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
@@ -49,7 +49,7 @@ public class PeripheralController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public PeripheralDto updatePeripheral(
             @PathVariable final Long id,
             @RequestPart("peripheralDto") final PeripheralDto peripheralDto,

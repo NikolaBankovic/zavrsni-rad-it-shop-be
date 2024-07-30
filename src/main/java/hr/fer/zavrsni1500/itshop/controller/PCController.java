@@ -41,7 +41,7 @@ public class PCController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public PCDto createPC(@RequestPart("pcDto") final PCDto pcDto,
                           @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
 
@@ -49,7 +49,7 @@ public class PCController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public PCDto updatePC(@PathVariable final Long id,
                           @RequestPart("pcDto") final PCDto pcDto,
                           @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
