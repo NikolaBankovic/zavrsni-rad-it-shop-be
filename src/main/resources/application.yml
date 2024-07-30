@@ -5,7 +5,9 @@ spring:
     password: S3cret
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:/liquibase/db-changelog.xml
   servlet:
     multipart:
       max-file-size: 10MB

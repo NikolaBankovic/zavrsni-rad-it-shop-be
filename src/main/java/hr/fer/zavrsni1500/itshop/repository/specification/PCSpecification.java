@@ -2,10 +2,8 @@ package hr.fer.zavrsni1500.itshop.repository.specification;
 
 import hr.fer.zavrsni1500.itshop.model.PC;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCFilter;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import hr.fer.zavrsni1500.itshop.model.PCType;
+import jakarta.persistence.criteria.*;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -31,8 +29,10 @@ public class PCSpecification extends ProductSpecification<PC> {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(predicate);
 
+        final Join<PC, PCType> pcTypeJoin = root.join("pcType");
+
         if (filter.getPcType() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("pcType"), filter.getPcType()));
+            predicates.add(criteriaBuilder.equal(pcTypeJoin.get("typeName"), filter.getPcType()));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

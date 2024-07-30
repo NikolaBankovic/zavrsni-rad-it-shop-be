@@ -2,10 +2,8 @@ package hr.fer.zavrsni1500.itshop.repository.specification;
 
 import hr.fer.zavrsni1500.itshop.model.PCPart;
 import hr.fer.zavrsni1500.itshop.dto.filter.PCPartFilter;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import hr.fer.zavrsni1500.itshop.model.PCPartType;
+import jakarta.persistence.criteria.*;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -31,8 +29,10 @@ public class PCPartSpecification extends ProductSpecification<PCPart> {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(predicate);
 
+        final Join<PCPart, PCPartType> pcPartTypeJoin = root.join("pcPartType");
+
         if (filter.getPcPartType() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("pcPartType"), filter.getPcPartType()));
+            predicates.add(criteriaBuilder.equal(pcPartTypeJoin.get("typeName"), filter.getPcPartType()));
         }
         if (filter.getUsedState() != null) {
             predicates.add(criteriaBuilder.equal(root.get("usedState"), filter.getUsedState()));

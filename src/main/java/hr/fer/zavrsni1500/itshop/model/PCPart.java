@@ -10,7 +10,8 @@ import lombok.Setter;
 @DiscriminatorValue(ProductType.PC_PART)
 public class PCPart extends Product{
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "pc_part_type_id")
     private PCPartType pcPartType;
 
     @Enumerated(EnumType.STRING)

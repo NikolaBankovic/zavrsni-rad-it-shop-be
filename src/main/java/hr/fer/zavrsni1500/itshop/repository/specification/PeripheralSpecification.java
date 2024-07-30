@@ -2,10 +2,8 @@ package hr.fer.zavrsni1500.itshop.repository.specification;
 
 import hr.fer.zavrsni1500.itshop.model.Peripheral;
 import hr.fer.zavrsni1500.itshop.dto.filter.PeripheralFilter;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import hr.fer.zavrsni1500.itshop.model.PeripheralType;
+import jakarta.persistence.criteria.*;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -31,8 +29,10 @@ public class PeripheralSpecification extends ProductSpecification<Peripheral> {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(predicate);
 
+        final Join<Peripheral, PeripheralType> peripheralTypeJoin = root.join("peripheralType");
+
         if (filter.getPeripheralType() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("peripheralType"), filter.getPeripheralType()));
+            predicates.add(criteriaBuilder.equal(peripheralTypeJoin.get("typeName"), filter.getPeripheralType()));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
