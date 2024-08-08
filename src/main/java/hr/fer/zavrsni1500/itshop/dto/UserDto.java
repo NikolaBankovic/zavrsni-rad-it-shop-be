@@ -3,6 +3,7 @@ package hr.fer.zavrsni1500.itshop.dto;
 import hr.fer.zavrsni1500.itshop.model.Role;
 
 public record UserDto(
+        Long id,
         String firstName,
         String lastName,
         String username,

@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_USER') || hasRole('ROLE_SUPPLIER')")
 public class OrderController {
 
     private final OrderService orderService;
@@ -44,9 +44,9 @@ public class OrderController {
     }
 
     @PostMapping()
-    public OrderDto createOrder() throws EmptyCartException {
+    public OrderDto createOrder(@RequestBody final String creditCardNumber) throws EmptyCartException {
         final User user = currentUserService.getCurrentUser();
-        return orderService.createOrder(user);
+        return orderService.createOrder(user, creditCardNumber);
     }
 
     @PutMapping()

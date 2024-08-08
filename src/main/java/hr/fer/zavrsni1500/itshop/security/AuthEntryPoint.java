@@ -19,11 +19,9 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException authException) throws IOException {
-        final String body = "You need to login to perform this action!";
-
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        objectMapper.writeValue(response.getOutputStream(), body);
+        objectMapper.writeValue(response.getOutputStream(), authException.getMessage());
     }
 }
