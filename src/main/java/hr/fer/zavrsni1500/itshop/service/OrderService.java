@@ -11,7 +11,7 @@ public interface OrderService {
     List<OrderDto> getAllOrders();
     List<OrderDto> getOrdersByUserId(Long userId);
     OrderDto getOrderById(Long orderId);
-    OrderDto createOrder(User user) throws EmptyCartException;
+    OrderDto createOrder(User user, String creditCardNumber) throws EmptyCartException;
     OrderDto updateOrder(OrderDto orderDto);
     void deleteOrder(Long orderId);
 }

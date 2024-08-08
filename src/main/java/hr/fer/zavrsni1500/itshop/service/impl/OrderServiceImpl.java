@@ -16,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.orderToOrderDto(order);
     }
 
-    public OrderDto createOrder(final User user) throws EmptyCartException {
+    public OrderDto createOrder(final User user, final String creditCardNumber) throws EmptyCartException {
         final Cart cart = cartRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new EmptyCartException("Cart is empty"));
 
@@ -59,9 +60,12 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(user);
         order.setOrderItemsList(orderItems);
         order.setTotalAmount();
+        order.setCreditCardNumber(String.format("****%s", creditCardNumber));
+        order.setOrderDate(new Date());
+        final OrderDto completedOrder = orderMapper.orderToOrderDto(orderRepository.save(order));
         cartRepository.delete(cart);
 
-        return orderMapper.orderToOrderDto(orderRepository.save(order));
+        return completedOrder;
 
     }
 

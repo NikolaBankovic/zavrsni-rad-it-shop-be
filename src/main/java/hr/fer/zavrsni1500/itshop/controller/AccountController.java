@@ -46,7 +46,7 @@ public class AccountController {
     }
 
     @PatchMapping("/{userId}")
-    @PreAuthorize("hasRole('ROLE_ADMIN') || @currentUserService.isCurrentUserMakingRequest(#userId)")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || @currentUserServiceImpl.isCurrentUserMakingRequest(#userId)")
     public void changeUserPassword(@PathVariable final Long userId,
                                    @RequestBody final PasswordChangeDto changePasswordDto) throws
             PasswordComplexityException,
