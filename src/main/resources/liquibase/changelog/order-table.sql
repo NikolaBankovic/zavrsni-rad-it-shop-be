@@ -24,3 +24,8 @@ WHERE credit_card_number IS NULL;
 UPDATE public."order"
 SET order_date = NOW()
 WHERE order_date IS NULL;
+
+--changeset nbankovic:order-table-11082024-01
+ALTER TABLE public."order"
+DROP CONSTRAINT user_id_fk,
+ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE SET NULL;

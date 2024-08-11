@@ -10,3 +10,12 @@ CREATE TABLE public.cart_item (
         CONSTRAINT product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id)
         );
 --rollback DROP TABLE public.cart_item
+
+--changeset nbankovic:cart-item-table-11082024-01
+ALTER TABLE public.cart_item
+DROP CONSTRAINT product_id_fk,
+ADD CONSTRAINT product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id) ON DELETE CASCADE;
+
+ALTER TABLE public.cart_item
+DROP CONSTRAINT cart_id_fk,
+ADD CONSTRAINT cart_id_fk FOREIGN KEY (cart_id) REFERENCES public.cart(id) ON DELETE CASCADE;

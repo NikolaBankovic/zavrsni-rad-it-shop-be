@@ -8,3 +8,8 @@ CREATE TABLE public.cart (
         CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES public."user"(id)
         );
 --rollback DROP TABLE public.cart
+
+--changeset nbankovic:cart-table-11082024-01
+ALTER TABLE public.cart
+DROP CONSTRAINT user_id_fk,
+ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES public."user"(id) ON DELETE CASCADE;

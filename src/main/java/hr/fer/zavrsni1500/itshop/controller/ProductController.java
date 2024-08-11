@@ -34,6 +34,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
+    @CrossOrigin("http://localhost:4200/product/")
     public void incrementTimesVisitedForProduct(@PathVariable final Long id) {
         productService.incrementTimesVisitedForProduct(id);
     }

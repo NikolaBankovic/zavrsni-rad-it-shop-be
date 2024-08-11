@@ -11,3 +11,13 @@ CREATE TABLE public.order_item (
             CONSTRAINT order_id_fk FOREIGN KEY (order_id) REFERENCES public."order"(id)
             );
 --rollback DROP TABLE public.order_item
+
+--changeset nbankovic:order-item-table-11082024-01
+ALTER TABLE public.order_item
+DROP CONSTRAINT product_id_fk,
+ADD CONSTRAINT product_id_fk FOREIGN KEY (product_id) REFERENCES public.product(id) ON DELETE SET NULL;
+
+ALTER TABLE public.order_item
+DROP CONSTRAINT order_id_fk,
+ADD CONSTRAINT order_id_fk FOREIGN KEY (order_id) REFERENCES public."order"(id) ON DELETE CASCADE;
+
