@@ -2,6 +2,7 @@ package hr.fer.zavrsni1500.itshop.service;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.SoftwareDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,4 +18,7 @@ public interface SoftwareService {
     CountDto getAllSoftwareCount(SoftwareFilter filter);
     void deleteSoftware(Long id);
     List<SoftwareDto> get5MostVisited();
+    List<TypeDto> getSoftwareTypes();
+    TypeDto createSoftwareType(TypeDto softwareTypeDto);
+    void deleteSoftwareType(Long id);
 }

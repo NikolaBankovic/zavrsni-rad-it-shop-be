@@ -7,6 +7,7 @@ import hr.fer.zavrsni1500.itshop.dto.UserDto;
 import hr.fer.zavrsni1500.itshop.exception.PasswordComplexityException;
 import hr.fer.zavrsni1500.itshop.exception.SamePasswordException;
 import hr.fer.zavrsni1500.itshop.exception.WrongPasswordException;
+import hr.fer.zavrsni1500.itshop.model.Role;
 import hr.fer.zavrsni1500.itshop.model.User;
 import hr.fer.zavrsni1500.itshop.repository.UserRepository;
 import hr.fer.zavrsni1500.itshop.service.UserService;
@@ -47,6 +48,9 @@ public class UserServiceImpl implements UserService {
 
         final User user = userMapper.registerDtoToUser(registerDto);
         user.setPassword(passwordEncoder.encode(registerDto.password()));
+        if(registerDto.role() == null) {
+            user.setRole(Role.ROLE_USER);
+        }
 
         userRepository.save(user);
     }

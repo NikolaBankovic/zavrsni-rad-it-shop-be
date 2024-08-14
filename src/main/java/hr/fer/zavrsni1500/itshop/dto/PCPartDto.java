@@ -1,6 +1,5 @@
 package hr.fer.zavrsni1500.itshop.dto;
 
-import hr.fer.zavrsni1500.itshop.model.PCPartType;
 import hr.fer.zavrsni1500.itshop.model.UsedState;
 
 public record PCPartDto(
@@ -9,7 +8,7 @@ public record PCPartDto(
         double price,
         String description,
         String image,
-        PCPartType pcPartType,
+        TypeDto pcPartType,
         UsedState usedState,
         Long warrantyLength,
         String manufacturerName,

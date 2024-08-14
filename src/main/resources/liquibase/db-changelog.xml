@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="liquibase/changelog/pc-part-type-table.sql"/>
+    <include file="liquibase/changelog/pc-type-table.sql"/>
+    <include file="liquibase/changelog/peripheral-type-table.sql"/>
+    <include file="liquibase/changelog/software-type-table.sql"/>
+    <include file="/liquibase/changelog/product-table.sql"/>
+    <include file="liquibase/changelog/user-table.sql"/>
+    <include file="/liquibase/changelog/cart-table.sql"/>
+    <include file="/liquibase/changelog/cart-item-table.sql"/>
+    <include file="liquibase/changelog/order-table.sql"/>
+    <include file="liquibase/changelog/order-item-table.sql"/>
+
+
+</databaseChangeLog>

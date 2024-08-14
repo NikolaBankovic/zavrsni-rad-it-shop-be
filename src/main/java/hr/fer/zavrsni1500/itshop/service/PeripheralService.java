@@ -2,6 +2,7 @@ package hr.fer.zavrsni1500.itshop.service;
 
 import hr.fer.zavrsni1500.itshop.dto.CountDto;
 import hr.fer.zavrsni1500.itshop.dto.PeripheralDto;
+import hr.fer.zavrsni1500.itshop.dto.TypeDto;
 import hr.fer.zavrsni1500.itshop.dto.filter.PeripheralFilter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,4 +18,7 @@ public interface PeripheralService {
     PeripheralDto updatePeripheral(Long id, PeripheralDto peripheralDto, MultipartFile image) throws IOException;
     void deletePeripheral(Long id);
     List<PeripheralDto> get5MostVisited();
+    List<TypeDto> getPeripheralTypes();
+    TypeDto createPeripheralType(TypeDto peripheralTypeDto);
+    void deletePeripheralType(Long id);
 }

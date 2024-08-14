@@ -41,6 +41,7 @@ public class WebSecurityConfiguration {
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/api/auth/**", "/api/codebook/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/product/**").permitAll()
+                .requestMatchers(HttpMethod.PATCH, "/api/product/**").permitAll()
                 .requestMatchers(HttpMethod.GET,
                         "/api/pc/**",
                         "/api/pc-part/**",

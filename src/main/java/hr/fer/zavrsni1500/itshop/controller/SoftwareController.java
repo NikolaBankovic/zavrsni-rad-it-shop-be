@@ -41,14 +41,14 @@ public class SoftwareController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public SoftwareDto createSoftware(@RequestPart("softwareDto") final SoftwareDto softwareDto,
                                       @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
         return softwareService.createSoftware(softwareDto, image);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public SoftwareDto updateSoftware(@PathVariable final Long id,
                                       @RequestPart("softwareDto") final SoftwareDto softwareDto,
                                       @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
@@ -60,4 +60,6 @@ public class SoftwareController {
     public void deleteSoftware(@PathVariable final Long id) {
         softwareService.deleteSoftware(id);
     }
+
+
 }

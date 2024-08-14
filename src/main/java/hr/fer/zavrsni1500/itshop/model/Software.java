@@ -10,7 +10,8 @@ import lombok.Setter;
 @DiscriminatorValue(ProductType.SOFTWARE)
 public class Software extends Product{
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "software_type_id")
     private SoftwareType softwareType;
 
 }

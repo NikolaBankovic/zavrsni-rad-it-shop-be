@@ -2,10 +2,8 @@ package hr.fer.zavrsni1500.itshop.repository.specification;
 
 import hr.fer.zavrsni1500.itshop.model.Software;
 import hr.fer.zavrsni1500.itshop.dto.filter.SoftwareFilter;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import hr.fer.zavrsni1500.itshop.model.SoftwareType;
+import jakarta.persistence.criteria.*;
 import lombok.NonNull;
 
 import java.util.ArrayList;
@@ -31,8 +29,10 @@ public class SoftwareSpecification extends ProductSpecification<Software> {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(predicate);
 
+        final Join<Software, SoftwareType> softwareTypeJoin = root.join("softwareType");
+
         if (filter.getSoftwareType() != null) {
-            predicates.add(criteriaBuilder.equal(root.get("softwareType"), filter.getSoftwareType()));
+            predicates.add(criteriaBuilder.equal(softwareTypeJoin.get("typeName"), filter.getSoftwareType()));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

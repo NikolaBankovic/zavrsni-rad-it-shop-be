@@ -41,7 +41,7 @@ public class PCPartController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public PCPartDto createPCPart(@RequestPart("pcPartDto") final PCPartDto pcPartDto,
                                   @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
 
@@ -49,7 +49,7 @@ public class PCPartController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_SUPPLIER')")
     public PCPartDto updatePCPart(@PathVariable final Long id,
                                   @RequestPart("pcPartDto") final PCPartDto pcPartDto,
                                   @RequestPart(value = "image", required = false) final MultipartFile image) throws IOException {
@@ -61,4 +61,5 @@ public class PCPartController {
     public void deletePCPart(@PathVariable final Long id) {
         pcPartService.deletePCPart(id);
     }
+
 }
