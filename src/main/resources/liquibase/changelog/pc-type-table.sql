@@ -13,3 +13,7 @@ INSERT INTO public.pc_type (type_name) VALUES
             ('Gaming'),
             ('Work Station'),
             ('Server');
+
+--changeset nbankovic:pc-type-table-14082024-01
+INSERT INTO public.pc_type (type_name) VALUES
+            ('Laptop');

@@ -17,7 +17,6 @@ CREATE TABLE public."user" (
 
 --changeset nbankovic:user-table-22072024-02
 INSERT INTO public."user" (address,email,first_name,last_name,"password",phone_number,"role",username) VALUES
-           ('J.J.Strossmayera','nikica444@gmail.com','Nikola','Bankovic','$2a$10$lqBHR3Hid93l6jlzqc3N7enLW0umgGoisPIWk07A6vL0VXUH/8SbK','0992633128','ROLE_ADMIN','nikica'),
-           ('J.J.Strossmayera','bankovic55@gmail.com','Filip','Bankovic','$2a$10$QKSV8TXoJq7Rz59xBRtnyeOGcWwUeD8MrR8X/46AqGpFmeGmmbvqW','0992624531','ROLE_USER','fico'),
-           ('Zagrebacka cesta Ivek','tova.tovs@gmail.com','Nikola','Tovernic','$2a$10$DS0bkMiK5X57TqatkdoMg.6V8KEnjdGP1n8xPpO6dgC.boRE5eYkK','0912345678','ROLE_ADMIN','tova'),
-           ('slavonski put 123','Triki@triki.triki','Triki','Triki','$2a$10$wEYusJVGDr.rUXslzQjzvOaTMR4Y3VweA3xhVed2OKht8WbZPnTSK','09912332123','ROLE_USER','triki');
+    ('admin adress','admin@email.com','Admin','Admin','$2a$10$vLKFZ/yBiDyjqiItYgUrEuz3EzIF52xoRfjAfprHCZhJd/WMu8IN6','123654978','ROLE_ADMIN','admin'),
+    ('supplier address','supplier@email.com','Supplier','','$2a$10$8VfJ7xYkiF1d89rtgWKVguq331IVen91MZfYMUJE0bNyfNepW2Pdu','123456798','ROLE_SUPPLIER','supplier'),
+    ('user adress','user@mail.com','User','User','$2a$10$yjurChNd2wKlieX48q4A7./jKce2Wl2S6VfH6q0Cl4Bf0mt0e.Rem','989823312','ROLE_USER','user');
